@@ -1,0 +1,48 @@
+.header {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  /* margin-bottom: 25px; */
+}
+
+.logo-div {
+  width: 30%;
+}
+
+.logo {
+  height: 100%;
+  margin: 0 10px;
+}
+
+.links {
+  /* width: 100%; */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.link {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: 500ms ease all;
+}
+
+.link:hover {
+  color: #488eff;
+  transform: scale(1.1);
+}
+
+.signin {
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: #488eff;
+  color: #fff;
+}
+
+.signin:hover {
+  background-color: #3669bb;
+  opacity: 0.8;
+}
