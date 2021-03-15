@@ -1,0 +1,48 @@
+.form-inputs {
+  display: flex;
+  justify-content: center;
+}
+
+.input-group {
+  position: relative;
+  margin: 0 1%;
+}
+
+.form-input {
+  background: none;
+  background-color: #fff;
+  color: #808080;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #808080;
+  margin: 25px 0;
+}
+
+.form-input:focus + label {
+  outline: none;
+  top: -1px;
+  font-size: 12px;
+  color: #fff;
+}
+
+.form-inputs label {
+  color: #808080;
+  font-size: 16px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 37px;
+  transition: 300ms ease all;
+}
+
+.form-buttons {
+  display: flex;
+  width: 250px;
+  margin: auto;
+  justify-content: space-between;
+}

@@ -1,0 +1,41 @@
+.intro {
+  background-color: #777;
+  background-image: url("../../assests/ride-hailing.jpg");
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 50vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.intro-text,
+.form-div {
+  padding: 10px;
+}
+
+.intro-text h1,
+.intro-text p {
+  color: #fff;
+  padding: 1rem;
+}
+
+.about {
+  padding: 30px 10%;
+  margin-top: 50px;
+  display: flex;
+}
+
+.about-image {
+  width: 100%;
+  max-width: 500px;
+}
+
+.about-image img {
+  width: 80%;
+  margin: auto;
+}
