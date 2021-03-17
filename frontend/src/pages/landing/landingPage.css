@@ -29,11 +29,16 @@
   padding: 1rem;
 }
 
+h2 {
+  text-align: center;
+}
+
 .about {
-  padding: 5%;
+  padding: 3%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #eee;
 }
 
 .about-image {
@@ -57,7 +62,7 @@
 }
 
 .howitworks {
-  padding: 0 5%;
+  padding: 3%;
 }
 
 .howitworks-text {

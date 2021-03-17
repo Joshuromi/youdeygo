@@ -4,14 +4,13 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
+}
+.title {
+  margin: 10px 0;
+}
 
-  .title {
-    margin: 10px 0;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }

@@ -17,23 +17,6 @@ const LandingPage = () => (
         <Form />
       </div>
     </div>
-    <div className="about">
-      <div className="about-image">
-        <img className="image" src={imageOne} alt="young africans in car" />
-      </div>
-      <div className="about-text">
-        <h2>About</h2>
-        <p>
-          Youdeygo is a free online Community created for the purpose of
-          connecting and conveying reliable citizens of Lagos from one location
-          to the other by means of ride sharing, we ensure you get the best
-          experience during your safe travels around Lagos state.
-        </p>
-        <Link to="/about">
-          <CustomButton>Read more</CustomButton>
-        </Link>
-      </div>
-    </div>
     <div className="howitworks">
       <div className="howitworks-text">
         <h2>How It Works</h2>
@@ -52,10 +35,11 @@ const LandingPage = () => (
               <i className="fas fa-check-circle"></i>Signup for free
             </p>
             <p>
-              <i className="fas fa-check-circle"></i>Find a ride
+              <i className="fas fa-check-circle"></i>Post a ride
             </p>
             <p>
-              <i className="fas fa-check-circle"></i>Safe and affordable trip
+              <i className="fas fa-check-circle"></i>Safe trip and reliable
+              riders.
             </p>
           </div>
         </div>
@@ -80,6 +64,23 @@ const LandingPage = () => (
         <Link to="/howitworks">
           <CustomButton>Read more</CustomButton>
         </Link>
+      </div>
+    </div>
+    <div className="about">
+      <div className="about-text">
+        <h2>About</h2>
+        <p>
+          Youdeygo is a free online Community created for the purpose of
+          connecting and conveying reliable citizens of Lagos from one location
+          to the other by means of ride sharing, we ensure you get the best
+          experience during your safe travels around Lagos state.
+        </p>
+        <Link to="/about">
+          <CustomButton>Read more</CustomButton>
+        </Link>
+      </div>
+      <div className="about-image">
+        <img className="image" src={imageOne} alt="young africans in car" />
       </div>
     </div>
   </div>
