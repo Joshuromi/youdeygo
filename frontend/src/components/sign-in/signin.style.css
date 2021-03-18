@@ -1,0 +1,16 @@
+.sign-in {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.title {
+  margin: 10px 0;
+}
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}

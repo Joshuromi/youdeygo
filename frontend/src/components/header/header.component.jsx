@@ -17,9 +17,9 @@ const Header = () => (
         How it works
       </Link>
       <Link to="/about" className="link">
-        About us
+        About
       </Link>
-      <Link to="signin">
+      <Link to="/signin">
         <div className="signin">Sign in</div>
       </Link>
     </div>

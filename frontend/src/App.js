@@ -1,6 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 import Header from "./components/header/header.component";
 import LandingPage from "./pages/landing/landingPage";
+import SignupAndSignin from "./pages/signup-and-signin/signupAndSignin";
 import "./App.css";
 
 const App = () => (
@@ -8,6 +9,7 @@ const App = () => (
     <Header />
     <Switch>
       <Route exact path="/" component={LandingPage} />
+      <Route path="/signin" component={SignupAndSignin} />
     </Switch>
   </div>
 );

@@ -7,6 +7,7 @@
   color: #fff;
   font-family: "Josefin Sans", sans-serif;
   transition: transform 300ms ease-in-out;
+  margin: 10px 0;
 }
 
 .custom-button:hover {
