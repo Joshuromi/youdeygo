@@ -5,7 +5,7 @@ const app = express.Router();
 app.get("/", (req, res) => res.send("Welcome to youDeyGo. A car pooling app"));
 
 app.post("/", async (req, res) => {
-  const { fullName, email, password } = req.body; 
+  const { fullName, email, password } = req.body;
   const user = new User(req.body);
   const createUser = await user.save();
   if (createUser) {
