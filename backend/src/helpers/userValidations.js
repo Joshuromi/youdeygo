@@ -71,23 +71,23 @@ class validations {
    * @description validate user details
    * @function signinValidations
    * @param {object} body
-   * @returns {Array} siginErrors
+   * @returns {Array} signinErrors
    */
   static signinValidations(body) {
     const { email, password } = body;
-    const siginErrors = {};
+    const signinErrors = {};
 
     if (!email || !validEmail.test(email)) {
-      siginErrors.email = [];
-      siginErrors.email.push('Invalid Email Format');
+      signinErrors.email = [];
+      signinErrors.email.push('Invalid Email Format');
     }
 
     if (!password || password.length < 2) {
-      siginErrors.password = [];
-      siginErrors.password.push('Password must be at least three characters');
+      signinErrors.password = [];
+      signinErrors.password.push('Password must be at least three characters');
     }
 
-    return siginErrors;
+    return signinErrors;
   }
 
   /**
@@ -102,32 +102,30 @@ class validations {
     const emailAlreadyExist = await checkEmail(email);
     const phoneNumberAlreadyExist = await checkPhoneNumber(phoneNumber);
 
-    if (!fullName || fullName.length < 7 || !validName.test(fullName)) {
-      signupErrors.fullName = [];
-      signupErrors.fullName.push(
+    if  (!fullName || !validFullName.test(fullName)) {
+      editErrors.fullName = [];
+      editErrors.fullName.push(
         'Full name is required, with at least seven alphabetical characters'
       );
     }
-
-     
     if (!email || !validEmail.test(email)) {
       editErrors.email = [];
       editErrors.email.push('Invalid Email Format');
     }
-    if (emailAlreadyExist !== null && emailAlreadyExist.dataValues.email.length > 0 && emailAlreadyExist.dataValues.id !== userId
-    ) {
-      editErrors.email = [];
-      editErrors.email.push('User with this email already exist');
-    }
-
+   
+    if (emailAlreadyExist !== null && emailAlreadyExist.email.length > 0 && emailAlreadyExist.id !== userId
+      ) {
+        editErrors.email = [];
+        editErrors.email.push('User with this email already exist');
+      }
     if (!phoneNumber || !validPhoneNumber.test(phoneNumber)) {
       editErrors.phoneNumber = [];
       editErrors.phoneNumber.push('Phone Number is required and must be up to 11 digits');
     }
 
     if (phoneNumberAlreadyExist !== null
-      && phoneNumberAlreadyExist.dataValues.phoneNumber.length > 0
-      && phoneNumberAlreadyExist.dataValues.id !== userId
+      && phoneNumberAlreadyExist.phoneNumber.length > 0
+      && phoneNumberAlreadyExist.id !== userId
     ) {
       editErrors.phoneNumber = [];
       editErrors.phoneNumber.push('User with this phone number already exist');

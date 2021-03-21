@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     role: Number,
+    enabled: Boolean,
     profilePicture: {type: String, default: null},
     drivingLicence: {type: String, default: null},
     address: {type: String, default: null},

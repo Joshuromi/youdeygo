@@ -1,5 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable radix */
 const bcrypt = require('bcryptjs');
 const createToken = require('../helpers/createToken');
 const userModel = require('../model/userModel')
@@ -23,7 +21,8 @@ class user {
         fullName, 
         email,
         password: hash,
-        phoneNumber, 
+        phoneNumber,
+        enabled: false,
         role: 0
       });
       const newUser = await createUser.save();
@@ -69,19 +68,19 @@ class user {
      * @param {*} res
      */
   static async editProfile(req, res) {
-    const userId = parseInt(req.decoded.userId);
-    const userFound = await Model.user.findOne({
-      where: { id: userId }
-    });
-
-    if (userFound) {
-      userFound.update({
-        firstName: req.body.firstName || userFound.firstName,
-        lastName: req.body.lastName || userFound.lastName,
-        middleName: req.body.middleName || userFound.middleName,
+    const userId = (req.decoded.userId);
+    const userFound = await userModel.findById(userId);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; 
+    const today =  new Date().toLocaleDateString("en-US", options);
+ 
+    if (userFound) { 
+      userFound.set({
+        fullName: req.body.fullName || userFound.fullName,
         email: req.body.email || userFound.email,
-        phoneNumber: req.body.phoneNumber || userFound.phoneNumber
+        phoneNumber: req.body.phoneNumber || userFound.phoneNumber,
+        udpatedAt: today
       });
+      userFound.save()
       return res.status(200).json({
         message: 'User updated successfully!',
         userFound
@@ -99,7 +98,7 @@ class user {
      * @param {*} res
      */
   static async getAllUsers(req, res) {
-    const allUsers = await Model.user.findAll({});
+    const allUsers = await userModel.find();
     if (allUsers.length > 0) {
       return res.status(200).json({
         message: 'Success',
@@ -118,42 +117,12 @@ class user {
      * @param {*} res
      */
   static async getSingleUser(req, res) {
-    const userId = parseInt(req.params.userId);
-    const userFound = await Model.user.findOne({
-      where: { id: userId },
-      include: [{
-        model: Model.transaction,
-        as: 'transactions',
-      }],
-    });
+    const userId = (req.params.userId);
+    const userFound = await userModel.findById(userId);
     if (userFound) {
       return res.status(200).json({
         message: 'Success',
         user: userFound
-      });
-    }
-    return res.status(404).json({
-      message: 'User not found!'
-    });
-  }
-
-  /**
-   * @description fetch user's account and loan balance from database
-   * @method checkBalance
-   * @param {*} req
-   * @param {*} res
-   */
-
-  static async checkBalance(req, res) {
-    const userId = parseInt(req.decoded.userId);
-    const userFound = await Model.user.findOne({
-      where: { id: userId }
-    });
-    if (userFound) {
-      return res.status(200).json({
-        message: 'Balance successfully fetched!',
-        accountBalance: userFound.accountBalance,
-        loanBalance: userFound.loanBalance
       });
     }
     return res.status(404).json({

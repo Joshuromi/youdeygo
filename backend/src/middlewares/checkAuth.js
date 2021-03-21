@@ -1,9 +1,7 @@
-import Model from '../models';
+const userModel = require('../model/userModel');
 
-export const isUserValid = async ({ decoded: { userId } }, res, next) => {
-  const userFound = await Model.user.findOne({
-    where: { id: userId }
-  });
+const isUserValid = async ({ decoded: { userId } }, res, next) => {
+  const userFound = await userModel.findById(userId);
   if (userFound) {
     return next();
   }
@@ -12,10 +10,8 @@ export const isUserValid = async ({ decoded: { userId } }, res, next) => {
   });
 };
 
-export const isUserAdmin = async ({ decoded: { userId } }, res, next) => {
-  const userFound = await Model.user.findOne({
-    where: { id: userId }
-  });
+ const isUserAdmin = async ({ decoded: { userId } }, res, next) => {
+  const userFound = await userModel.findById(userId);
   if (userFound.role === 1) {
     return next();
   }
@@ -23,3 +19,5 @@ export const isUserAdmin = async ({ decoded: { userId } }, res, next) => {
     message: 'Only Admin is allowed!'
   });
 };
+
+module.exports = { isUserValid, isUserAdmin }
