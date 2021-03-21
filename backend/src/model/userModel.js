@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     password: String,
     role: Number,
     enabled: Boolean,
+    verified: Boolean,
     profilePicture: {type: String, default: null},
     drivingLicence: {type: String, default: null},
     address: {type: String, default: null},
