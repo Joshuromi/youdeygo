@@ -15,3 +15,11 @@
 .title {
   margin: 10px 0;
 }
+
+.error p {
+  background-color: #fdd;
+  color: #f00;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}
