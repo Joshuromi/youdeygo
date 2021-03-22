@@ -1,0 +1,114 @@
+.landing-page {
+  padding-top: 80px;
+}
+
+.intro {
+  background-color: #777;
+  background-image: url("../../assests/ride-hailing.jpg");
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 60vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.intro-text,
+.form-div {
+  padding: 10px;
+}
+
+.intro-text h1,
+.intro-text p {
+  font-family: "Josefin Sans", sans-serif;
+  color: #fff;
+  padding: 1rem;
+}
+
+h2 {
+  text-align: center;
+}
+
+.about {
+  padding: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+}
+
+.about-image {
+  width: 60%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.image {
+  width: 100%;
+}
+
+.about-text {
+  width: 40%;
+  max-width: 400px;
+  padding: 20px;
+}
+.about-text p {
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+.howitworks {
+  padding: 3%;
+}
+
+.howitworks-text {
+  text-align: center;
+  max-width: 500px;
+  margin: auto;
+  line-height: 2;
+}
+
+.howitworks-description {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.car-owners {
+  width: 50%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.riders {
+  width: 50%;
+}
+.howitworks-info {
+  margin: 10px;
+}
+
+.howitworks-button {
+  margin: auto;
+  width: fit-content;
+}
+
+.card {
+  max-width: 380px;
+  padding: 40px;
+  margin: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+i {
+  color: #488eff;
+  margin-right: 10px;
+}

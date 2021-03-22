@@ -1,0 +1,22 @@
+.custom-button {
+  background-color: #488eff;
+  width: 100px;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  font-family: "Josefin Sans", sans-serif;
+  transition: transform 300ms ease-in-out;
+  margin: 10px 0;
+}
+
+.custom-button:hover {
+  transform: scale(1.1);
+  background-color: #3669bb;
+  opacity: 0.9;
+}
+
+.custom-button:focus {
+  outline: 3px solid #488eff;
+  outline-offset: 3px;
+}

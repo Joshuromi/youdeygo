@@ -1,0 +1,25 @@
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  padding: 10px;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.title {
+  margin: 10px 0;
+}
+
+.error p {
+  background-color: #fdd;
+  color: #f00;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}

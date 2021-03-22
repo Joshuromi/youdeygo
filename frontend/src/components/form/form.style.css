@@ -1,0 +1,11 @@
+.form-inputs {
+  display: flex;
+  justify-content: center;
+}
+
+.form-buttons {
+  display: flex;
+  width: 250px;
+  margin: auto;
+  justify-content: space-between;
+}
