@@ -9,10 +9,11 @@
   color: #777;
   font-size: 18px;
   padding: 10px 10px 10px 5px;
-  display: block;
+  /* display: block; */
   width: 100%;
   border: 1px solid #808080;
-  margin: 25px 0;
+  margin: 25px auto;
+  max-width: 500px;
 }
 
 .form-input:focus {
@@ -41,4 +42,10 @@ label {
   left: 5px;
   top: 35px;
   transition: 300ms ease all;
+}
+
+@media (max-width: 800px) {
+  .form-input {
+    margin: 15px 0;
+  }
 }

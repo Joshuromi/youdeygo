@@ -14,3 +14,9 @@
   flex-direction: column;
   padding: 10px;
 }
+
+@media (max-width: 800px) {
+  .sign-in {
+    margin: auto;
+  }
+}

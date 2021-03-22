@@ -1,0 +1,12 @@
+.dashboard {
+  padding-top: 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.informations {
+  /* background-image: linear-gradient(to right, #ffffff 0%, #c3cfe2 100%); */
+  width: 100%;
+  margin-left: 150px;
+  padding: 30px;
+}

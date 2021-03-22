@@ -33,18 +33,18 @@ class SignUp extends React.Component {
       return;
     }
 
-    const response = await api.post("/", {
+    const response = await api.post("/register", {
       fullName: displayName,
       email,
       password,
     });
 
-    const user = response.data || false;
+    const userId = response.data._id || false;
 
-    console.log(user);
+    console.log(userId);
 
-    if (user) {
-      localStorage.setItem("user", user);
+    if (userId) {
+      localStorage.setItem("user", userId);
       history.push("/dashboard");
     } else {
       this.setState({ error: response.data.message });
