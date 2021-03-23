@@ -1,5 +1,5 @@
 const userModel = require("../model/userModel");
-const  { validName,validFullName, validEmail, validPhoneNumber } = require('./regEx') ;
+const  { validName, validEmail, validPhoneNumber } = require('./regEx') ;
 
 // Check if email already in the database
 const checkEmail = (email) => userModel.findOne({ email });
@@ -18,31 +18,24 @@ class validations {
    * @returns {Array} signupErrors
    */
   static async signupValidations(body) {
-    const { fullName, phoneNumber, email, password, confirmPassword } = body; 
+    const { firstName, lastName, email, password, confirmPassword } = body; 
     const signupErrors = {};
-    const emailAlreadyExist = await checkEmail(email);
-    const phoneNumberAlreadyExist = await checkPhoneNumber(phoneNumber);
+    const emailAlreadyExist = await checkEmail(email); 
 
-    if (!fullName || !validFullName.test(fullName)) {
-      signupErrors.fullName = [];
-      signupErrors.fullName.push(
-        'First, Middle and Last name must be at least 3 alphabetical characters each'
+    if (!firstName || firstName.length < 3 || !validName.test(firstName)) {
+      signupErrors.firstName = [];
+      signupErrors.firstName.push(
+        'First name is required, with at least three alphabetical characters'
       );
     }
-
-    if (!phoneNumber || !validPhoneNumber.test(phoneNumber)) {
-      signupErrors.phoneNumber = [];
-      signupErrors.phoneNumber.push(
-        'Phone Number is required and must be up to 11 digits'
+   
+    if (!lastName || lastName.length < 3 || !validName.test(lastName)) {
+      signupErrors.lastName = [];
+      signupErrors.lastName.push(
+        'Last name is required, with at least three alphabetical characters'
       );
-    }
-    if (phoneNumberAlreadyExist) {
-      signupErrors.phoneNumber = [];
-      signupErrors.phoneNumber.push(
-        'Phone Number already exist'
-      );
-    }
-
+    } 
+    
     if (!email || !validEmail.test(email)) {
       signupErrors.email = [];
       signupErrors.email.push('Invalid Email Format');
@@ -97,15 +90,22 @@ class validations {
    * @returns {Array} editErrors
    */
   static async editValidations(body, userId) {
-    const { fullName, email, phoneNumber } = body;
+    const { firstName, lastName, email, phoneNumber } = body;
     const editErrors = {};
     const emailAlreadyExist = await checkEmail(email);
     const phoneNumberAlreadyExist = await checkPhoneNumber(phoneNumber);
 
-    if  (!fullName || !validFullName.test(fullName)) {
-      editErrors.fullName = [];
-      editErrors.fullName.push(
-        'Full name is required, with at least seven alphabetical characters'
+    if (!firstName || firstName.length < 3 || !validName.test(firstName)) {
+      signupErrors.firstName = [];
+      signupErrors.firstName.push(
+        'First name is required, with at least three alphabetical characters'
+      );
+    }
+   
+    if (!lastName || lastName.length < 3 || !validName.test(lastName)) {
+      signupErrors.lastName = [];
+      signupErrors.lastName.push(
+        'Last name is required, with at least three alphabetical characters'
       );
     }
     if (!email || !validEmail.test(email)) {

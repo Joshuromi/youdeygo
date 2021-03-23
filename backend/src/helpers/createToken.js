@@ -5,9 +5,9 @@ const secret = process.env.JWT_KEY;
  const createToken = (userData) => {
   const token = jwt.sign({
     userId: userData._id,
-    firstName: userData.fullName,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
     email: userData.email,
-    phoneNumber: userData.phoneNumber,
     role: (() => ((userData.role === 1) ? 'Admin' : 'User'))()
   }, secret, {
     expiresIn: '1h'
