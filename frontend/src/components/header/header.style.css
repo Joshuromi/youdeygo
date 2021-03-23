@@ -1,0 +1,54 @@
+.header {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 5%;
+  position: fixed;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.logo-div {
+  width: 30%;
+}
+
+.logo {
+  height: 100%;
+}
+
+.links {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.link {
+  padding: 10px;
+  cursor: pointer;
+  transition: 500ms ease all;
+}
+
+.link:hover {
+  color: #488eff;
+  transform: scale(1.1);
+}
+
+.signin {
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: #488eff;
+  color: #fff;
+}
+
+.signin:hover {
+  background-color: #3669bb;
+  opacity: 0.8;
+}
+
+@media (max-width: 800px) {
+  .header {
+    justify-content: space-between;
+  }
+}
