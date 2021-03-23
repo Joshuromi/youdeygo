@@ -12,6 +12,7 @@ a {
 }
 
 p,
+td,
 label {
   font-family: "Raleway", sans-serif;
   line-height: 1.5;

@@ -1,3 +1,4 @@
+
 const express = require('express');
 const user = require('./../controllers/userController');
 const ride = require('../controllers/rideController');
@@ -6,7 +7,7 @@ const  {isUserValid, isUserAdmin }  = require('./../middlewares/checkAuth') ;
 const { validateSignup, validateSignin, validateEdit } = require('./../middlewares/userCredentials');
 const app = express.Router();
 
-app.get('/', (req, res) => res.send('Welcome to youDeyGo. A car pooling app'));
+app.get("/", (req, res) => res.send("Welcome to youDeyGo. A car pooling app"));
 
 // User Routes
 app.get('/users',verifyToken, isUserAdmin, user.getAllUsers);
@@ -20,6 +21,5 @@ app.delete('/delete/:userId', verifyToken, isUserAdmin, user.deleteUser);
 
 // Ride Routes
 app.post('/rides', verifyToken, isUserValid, ride.create); //validateRideInput
-
 
 module.exports = app;

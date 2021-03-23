@@ -23,3 +23,9 @@
   padding: 5px;
   margin: 5px;
 }
+
+@media (max-width: 800px) {
+  .sign-up {
+    margin: auto;
+  }
+}

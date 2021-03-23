@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import Logo from "../../assests/logo.png";
 import "./header.style.css";
 
+const toogle = () => {
+  var nav = document.getElementById("nav");
+  nav.classList.toggle("none");
+};
+
 const Header = () => (
   <div className="header">
     <div className="logo-div">
@@ -9,7 +14,7 @@ const Header = () => (
         <img className="logo" src={Logo} alt="logo" />
       </Link>
     </div>
-    <div className="links">
+    <div className="links" id="nav" onClick={toogle}>
       <Link to="/" className="link">
         Home
       </Link>
@@ -22,6 +27,9 @@ const Header = () => (
       <Link to="/signin">
         <div className="signin">Sign in</div>
       </Link>
+    </div>
+    <div className="bar" onClick={toogle}>
+      <i className="fa fa-bars"></i>
     </div>
   </div>
 );
