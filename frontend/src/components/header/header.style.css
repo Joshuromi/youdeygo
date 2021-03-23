@@ -74,7 +74,7 @@
 
   .links {
     position: absolute;
-    right: 0;
+    right: 5px;
     top: 70px;
     flex-direction: column;
     height: 180px;

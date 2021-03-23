@@ -1,7 +1,7 @@
 import React from "react";
-import "./displayTrips.style.css";
+import "./table.style.css";
 
-class DisplayTrips extends React.Component {
+class Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,10 +17,9 @@ class DisplayTrips extends React.Component {
 
   render() {
     const { infos } = this.state;
-    console.log(infos);
     return (
       <table>
-        <caption>All Trips</caption>
+        <caption>Trips</caption>
         <thead>
           <tr>
             <th scope="col">From</th>
@@ -46,4 +45,4 @@ class DisplayTrips extends React.Component {
   }
 }
 
-export default DisplayTrips;
+export default Table;

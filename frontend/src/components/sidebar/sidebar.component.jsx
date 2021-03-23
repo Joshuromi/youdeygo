@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./sidebar.style.css";
 import Pp from "../../assests/pp.png";
 
@@ -8,15 +9,21 @@ const Sidebar = () => (
       <p>DisplayName</p>
     </div>
     <div className="tabs">
-      <div className="tab">
-        <span>YOUR TRIPS</span>
-      </div>
-      <div className="tab">
-        <span>SEARCH</span>
-      </div>
-      <div className="tab">
-        <span>POST / FIND</span>
-      </div>
+      <Link to="/dashboard">
+        <div className="tab">
+          <span>Your Trips</span>
+        </div>
+      </Link>
+      <Link to="/dashboard/alltrips">
+        <div className="tab">
+          <span>All Trips</span>
+        </div>
+      </Link>
+      <Link to="/dashboard/postorfind">
+        <div className="tab">
+          <span>Find/Post Trip</span>
+        </div>
+      </Link>
     </div>
   </div>
 );
