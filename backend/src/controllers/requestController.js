@@ -23,10 +23,10 @@ class ride {
     const passengerName = `${userFound.firstName} ${userFound.lastName}`;
 
     const passengerPhone = userFound.phoneNumber;
+    const { seats, message } = req.body;
+    const { carName, plateNumber, depature, destination, time, scheduleDate, cost, message } = rideFound
 
-    const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost, message } = req.body
-
-    const newRide = new requestModel({ userId, driverName, driverPhone, carName, plateNumber, driverPhone, depature,
+    const newRide = new requestModel({ userId, rideId, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature,
       destination, time, scheduleDate, seats, cost, message, createdAt: today, updatedAt: today});
 
     const ride = await newRide.save();

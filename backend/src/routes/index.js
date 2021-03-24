@@ -20,6 +20,7 @@ app.put('/disable/:userId', verifyToken, isUserAdmin, user.disableUser);
 app.delete('/delete/:userId', verifyToken, isUserAdmin, user.deleteUser);
 
 // Ride Routes
+app.get('/rides', ride.getAllRides)
 app.post('/rides', verifyToken, isUserValid, ride.create); //validateRideInput
 
 module.exports = app;
