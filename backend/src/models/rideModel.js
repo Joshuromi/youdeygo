@@ -9,7 +9,7 @@ const rideSchema = new mongoose.Schema({
     depature: String,
     destination: String,
     time: String,
-    date: String,
+    scheduleDate: String,
     seats: Number,
     cost: Number,
     description: String,

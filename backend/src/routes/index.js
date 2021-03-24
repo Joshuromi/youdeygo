@@ -1,11 +1,10 @@
 const express = require('express');
-const user = require('./../controllers/userController');
+const user = require('../controllers/userController');
 const ride = require('../controllers/rideController');
-const  verifyToken = require('./../middlewares/verifyToken');
-const  {isUserValid, isUserAdmin }  = require('./../middlewares/checkAuth') ;
-const { validateSignup, validateSignin, validateEdit } = require('./../middlewares/userCredentials');
+const  verifyToken = require('../middlewares/verifyToken');
+const  {isUserValid, isUserAdmin }  = require('../middlewares/checkAuth') ;
+const { validateSignup, validateSignin, validateEdit } = require('../middlewares/userCredentials');
 const app = express.Router();
-
 app.get('/', (req, res) => res.send('Welcome to youDeyGo. A car pooling app'));
 
 // User Routes
