@@ -1,4 +1,4 @@
-const userModel = require('../model/userModel');
+const userModel = require('../models/userModel');
 
 const isUserValid = async ({ decoded: { userId } }, res, next) => {
   const userFound = await userModel.findById(userId);

@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const createToken = require('../helpers/createToken');
-const userModel = require('../model/userModel');
-const rideModel = require('../model/rideModel');
+const userModel = require('../models/userModel');
+const rideModel = require('../models/rideModel');
 
 const saltRounds = 10;
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
