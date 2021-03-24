@@ -11,6 +11,7 @@ class SignUp extends React.Component {
     this.state = {
       displayName: "",
       email: "",
+      phoneNumber: "",
       password: "",
       confirmPassword: "",
       error: "",
@@ -25,29 +26,35 @@ class SignUp extends React.Component {
 
     if (password.length < 6 || password.length > 18) {
       this.setState({ error: "Password must be 6 - 18 characters" });
+      setTimeout(() => this.setState({ error: "" }), 3000);
       return;
     }
 
     if (password !== confirmPassword) {
       this.setState({ error: "Password does not match" });
+      setTimeout(() => this.setState({ error: "" }), 3000);
       return;
     }
 
-    const response = await api.post("/", {
-      fullName: displayName,
-      email,
-      password,
-    });
+    try {
+      const response = await api.post("/register", {
+        fullName: displayName,
+        email,
+        password,
+      });
 
-    const user = response.data || false;
+      const userId = response.data._id || false;
 
-    console.log(user);
+      console.log(userId);
 
-    if (user) {
-      localStorage.setItem("user", user);
-      history.push("/dashboard");
-    } else {
-      this.setState({ error: response.data.message });
+      if (userId) {
+        localStorage.setItem("user", userId);
+        history.push("/dashboard");
+      } else {
+        this.setState({ error: response.data.message });
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -57,7 +64,14 @@ class SignUp extends React.Component {
   };
 
   render() {
-    const { displayName, email, password, confirmPassword, error } = this.state;
+    const {
+      displayName,
+      email,
+      phoneNumber,
+      password,
+      confirmPassword,
+      error,
+    } = this.state;
     return (
       <div className="sign-up">
         <h2 className="title">Sign up</h2>
@@ -78,6 +92,14 @@ class SignUp extends React.Component {
             value={email}
             handleChange={this.handleChange}
             label="Email"
+            required
+          />
+          <FormInput
+            type="text"
+            name="phoneNumber"
+            value={phoneNumber}
+            handleChange={this.handleChange}
+            label="Phone Number"
             required
           />
           <FormInput
