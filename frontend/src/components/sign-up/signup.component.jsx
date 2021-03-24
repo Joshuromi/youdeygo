@@ -9,7 +9,8 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: "",
+      firstName: "",
+      lastName: "",
       email: "",
       phoneNumber: "",
       password: "",
@@ -21,7 +22,14 @@ class SignUp extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { displayName, email, password, confirmPassword } = this.state;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    } = this.state;
+
     const { history } = this.props;
 
     if (password.length < 6 || password.length > 18) {
@@ -38,23 +46,26 @@ class SignUp extends React.Component {
 
     try {
       const response = await api.post("/register", {
-        fullName: displayName,
+        firstName,
+        lastName,
         email,
         password,
+        confirmPassword,
       });
 
-      const userId = response.data._id || false;
+      const token = response.data.token || false;
 
-      console.log(userId);
+      console.log(response.data);
 
-      if (userId) {
-        localStorage.setItem("user", userId);
+      if (token) {
+        localStorage.setItem("token", token);
         history.push("/dashboard");
       } else {
-        this.setState({ error: response.data.message });
+        console.log(Response.data.errors);
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
+      this.setState({ error: error.errors });
     }
   };
 
@@ -65,9 +76,10 @@ class SignUp extends React.Component {
 
   render() {
     const {
-      displayName,
+      firstName,
+      lastName,
       email,
-      phoneNumber,
+      // phoneNumber,
       password,
       confirmPassword,
       error,
@@ -80,10 +92,18 @@ class SignUp extends React.Component {
         <form className="sign-up-form" onSubmit={this.handleSubmit}>
           <FormInput
             type="text"
-            name="displayName"
-            value={displayName}
+            name="firstName"
+            value={firstName}
             handleChange={this.handleChange}
-            label="Display Name"
+            label="First Name"
+            required
+          />
+          <FormInput
+            type="text"
+            name="lastName"
+            value={lastName}
+            handleChange={this.handleChange}
+            label="Last Name"
             required
           />
           <FormInput
@@ -92,14 +112,6 @@ class SignUp extends React.Component {
             value={email}
             handleChange={this.handleChange}
             label="Email"
-            required
-          />
-          <FormInput
-            type="text"
-            name="phoneNumber"
-            value={phoneNumber}
-            handleChange={this.handleChange}
-            label="Phone Number"
             required
           />
           <FormInput

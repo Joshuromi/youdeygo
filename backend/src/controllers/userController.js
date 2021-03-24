@@ -1,11 +1,16 @@
-const bcrypt = require('bcryptjs');
-const createToken = require('../helpers/createToken');
-const userModel = require('../model/userModel');
-const rideModel = require('../model/rideModel');
+const bcrypt = require("bcryptjs");
+const createToken = require("../helpers/createToken");
+const userModel = require("../model/userModel");
+const rideModel = require("../model/rideModel");
 
 const saltRounds = 10;
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-const today = new Date().toLocaleDateString('en-US', options);
+const options = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+const today = new Date().toLocaleDateString("en-US", options);
 /**
  * @description user controller
  * class user
@@ -18,7 +23,7 @@ class user {
    * @param {*} res
    */
   static async register(req, res) {
-    const { firstName,lastName, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     await bcrypt.hash(password, saltRounds, async (error, hash) => {
       const createUser = new userModel({
         firstName,
@@ -33,7 +38,7 @@ class user {
       });
       const newUser = await createUser.save();
       return res.status(201).json({
-        message: 'User successfully created',
+        message: "User successfully created",
         token: await createToken(newUser),
       });
     });
@@ -52,17 +57,17 @@ class user {
       await bcrypt.compare(password, userFound.password, (error, result) => {
         if (result) {
           return res.status(200).json({
-            message: 'Access granted!',
+            message: "Access granted!",
             token: createToken(userFound),
           });
         }
         return res.status(400).json({
-          message: 'Email and password not match!',
+          message: "Email and password not match!",
         });
       });
     } else {
       return res.status(400).json({
-        message: 'Access denied!',
+        message: "Access denied!",
       });
     }
   }
@@ -87,12 +92,12 @@ class user {
       });
       userFound.save();
       return res.status(200).json({
-        message: 'User updated successfully!',
+        message: "User updated successfully!",
         userFound,
       });
     }
     return res.status(404).json({
-      message: 'User not found',
+      message: "User not found",
     });
   }
 
@@ -106,12 +111,12 @@ class user {
     const allUsers = await userModel.find();
     if (allUsers.length > 0) {
       return res.status(200).json({
-        message: 'Success',
+        message: "Success",
         users: allUsers,
       });
     }
     return res.status(200).json({
-      message: 'No registered user yet!',
+      message: "No registered user yet!",
     });
   }
 
@@ -125,16 +130,16 @@ class user {
     const userId = req.params.userId;
     const userFound = await userModel.findById(userId);
     if (userFound) {
-      const rides = await rideModel.find({userId: userFound.id});
-      const rideCreated = rides.length > 0 ? rides : 'No ride created yet!'
+      const rides = await rideModel.find({ userId: userFound.id });
+      const rideCreated = rides.length > 0 ? rides : "No ride created yet!";
       return res.status(200).json({
-        message: 'Success',
+        message: "Success",
         userFound,
-        rideCreated
+        rideCreated,
       });
     }
     return res.status(404).json({
-      message: 'User not found!',
+      message: "User not found!",
     });
   }
   /**
@@ -151,17 +156,17 @@ class user {
     if (userFound) {
       if (userFound.id === signInId) {
         return res.status(403).json({
-          message: 'You can\'t enable yourself',
+          message: "You can't enable yourself",
         });
       }
       await userFound.set({ enabled: true });
       userFound.save();
       return res.status(200).json({
-        message: 'User successfully enabled!',
+        message: "User successfully enabled!",
       });
     }
     return res.status(201).json({
-      message: 'User not found!',
+      message: "User not found!",
     });
   }
 
@@ -179,17 +184,17 @@ class user {
     if (userFound) {
       if (userFound.id === signInId) {
         return res.status(403).json({
-          message: 'You can\'t disable yourself',
+          message: "You can't disable yourself",
         });
       }
-      await userFound.set({ enabled: false }); 
+      await userFound.set({ enabled: false });
       userFound.save();
       return res.status(200).json({
-        message: 'User successfully disabled!',
+        message: "User successfully disabled!",
       });
     }
     return res.status(201).json({
-      message: 'User not found!',
+      message: "User not found!",
     });
   }
 
@@ -206,16 +211,16 @@ class user {
     if (userFound) {
       if (userFound.id === signInId) {
         return res.status(403).json({
-          message: 'You can\'t delete yourself',
+          message: "You can't delete yourself",
         });
       }
-      await userModel.deleteOne({_id: userId});
+      await userModel.deleteOne({ _id: userId });
       return res.status(200).json({
-        message: 'User successfully deleted!'
+        message: "User successfully deleted!",
       });
     }
     return res.status(201).json({
-      message: 'User not found!',
+      message: "User not found!",
     });
   }
 }
