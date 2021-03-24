@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel');
 const rideModel = require('../models/rideModel');
+const requestModel = require('../models/requestModel')
 
 
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -14,13 +15,18 @@ class ride {
    */
   static async create(req, res) { 
     const userId = req.decoded.userId; // Get loggedIn userId
+    const rideId = req.params.rideId; // Get rideId passed in 
+
     const userFound = await userModel.findById(userId); // Fetch loggedIn user
-    const driverName = `${userFound.firstName} ${userFound.lastName}`;
-    const driverPhone = userFound.phoneNumber;
+    const rideFound = await rideModel.findById(rideId); // Fetch selected ride
+
+    const passengerName = `${userFound.firstName} ${userFound.lastName}`;
+
+    const passengerPhone = userFound.phoneNumber;
 
     const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost, message } = req.body
 
-    const newRide = new rideModel({ userId, driverName, driverPhone, carName, plateNumber, driverPhone, depature,
+    const newRide = new requestModel({ userId, driverName, driverPhone, carName, plateNumber, driverPhone, depature,
       destination, time, scheduleDate, seats, cost, message, createdAt: today, updatedAt: today});
 
     const ride = await newRide.save();

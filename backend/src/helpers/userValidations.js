@@ -1,4 +1,4 @@
-const userModel = require("../model/userModel");
+const userModel = require("../models/userModel");
 const { validName, validEmail, validPhoneNumber } = require("./regEx");
 
 // Check if email already in the database
