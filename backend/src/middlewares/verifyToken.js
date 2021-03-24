@@ -14,12 +14,12 @@ const verifyToken = (req, res, next) => {
       req.decoded = jwt.verify(token, secret);
       next();
     } catch (error) {
-      return res.status(401).json({
+      return res.send({
         message: "Auth failed",
       });
     }
   } else {
-    return res.status(401).json({
+    return res.send({
       message: "Token not provided",
     });
   }

@@ -56,17 +56,17 @@ class user {
     if (userFound) {
       await bcrypt.compare(password, userFound.password, (error, result) => {
         if (result) {
-          return res.status(200).json({
+          return res.status(200).send({
             message: "Access granted!",
             token: createToken(userFound),
           });
         }
-        return res.status(400).json({
+        return res.send({
           message: "Email and password not match!",
         });
       });
     } else {
-      return res.status(400).json({
+      return res.send({
         message: "Access denied!",
       });
     }

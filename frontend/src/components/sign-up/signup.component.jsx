@@ -1,4 +1,5 @@
 import React from "react";
+import jwt from "jwt-decode";
 import FormInput from "../form-input/formInput.component";
 import CustomButton from "../buttons/customButton.component";
 import { withRouter } from "react-router-dom";
@@ -54,18 +55,19 @@ class SignUp extends React.Component {
       });
 
       const token = response.data.token || false;
+      const user = jwt(token);
 
       console.log(response.data);
 
       if (token) {
-        localStorage.setItem("token", token);
+        localStorage.setItem("token", JSON.stringify(user));
         history.push("/dashboard");
       } else {
-        console.log(Response.data.errors);
+        this.setState({ error: response.data.message });
       }
     } catch (error) {
       console.log(error);
-      this.setState({ error: error.errors });
+      this.setState({ error: error.message });
     }
   };
 
@@ -79,7 +81,6 @@ class SignUp extends React.Component {
       firstName,
       lastName,
       email,
-      // phoneNumber,
       password,
       confirmPassword,
       error,

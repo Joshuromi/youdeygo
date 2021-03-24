@@ -24,10 +24,10 @@ class SignIn extends React.Component {
 
     try {
       const response = await api.post("/login", { email, password });
-      const userId = response.data._id || false;
+      const token = response.data.token || false;
 
-      if (userId) {
-        localStorage.setItem("user", userId);
+      if (token) {
+        localStorage.setItem("token", token);
         history.push("/dashboard");
       } else {
         this.setState({ error: response.data.message });
