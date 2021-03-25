@@ -1,11 +1,16 @@
-const bcrypt = require('bcryptjs');
-const createToken = require('../helpers/createToken');
-const userModel = require('../models/userModel');
-const rideModel = require('../models/rideModel');
+const bcrypt = require("bcryptjs");
+const createToken = require("../helpers/createToken");
+const userModel = require("../models/userModel");
+const rideModel = require("../models/rideModel");
 
 const saltRounds = 10;
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-const today = new Date().toLocaleDateString('en-US', options);
+const options = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+const today = new Date().toLocaleDateString("en-US", options);
 /**
  * @description user controller
  * class user
@@ -18,7 +23,7 @@ class user {
    * @param {*} res
    */
   static async register(req, res) {
-    const { firstName,lastName, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     await bcrypt.hash(password, saltRounds, async (error, hash) => {
       const createUser = new userModel({
         firstName,
@@ -33,7 +38,7 @@ class user {
       });
       const newUser = await createUser.save();
       return res.status(201).json({
-        message: 'User successfully created',
+        message: "User successfully created",
         token: await createToken(newUser),
       });
     });
@@ -51,8 +56,8 @@ class user {
     if (userFound) {
       await bcrypt.compare(password, userFound.password, (error, result) => {
         if (result) {
-          return res.status(200).json({
-            message: 'Access granted!',
+          return res.status(200).send({
+            message: "Access granted!",
             token: createToken(userFound),
           });
         }
@@ -60,6 +65,7 @@ class user {
       });
     } else {
       return res.send('Access denied!');
+
     }
   }
 
@@ -82,12 +88,14 @@ class user {
         updatedAt: today,
       });
       userFound.save();
+
       return res.send({
         message: 'User updated successfully!',
         userFound,
       });
     }
     return res.send('User not found');
+
   }
 
   /**
@@ -99,12 +107,14 @@ class user {
   static async getAllUsers(req, res) {
     const allUsers = await userModel.find();
     if (allUsers.length > 0) {
+
       return res.send({
         message: 'Success',
         allUsers,
       });
     }
     return res.send( 'No registered user yet!');
+
   }
 
   /**
@@ -122,10 +132,12 @@ class user {
       return res.send({
         message: 'Success',
         userFound,
-        rideCreated
+        rideCreated,
       });
     }
+
     return res.send('User not found!') ;
+
   }
   /**
    * @description Enable a User
@@ -140,6 +152,7 @@ class user {
     const userFound = await userModel.findById(userId);
     if (userFound) {
       if (userFound.id === signInId) {
+
         return res.send('You can\'t enable yourself');
       }
       await userFound.set({ enabled: true });
@@ -147,7 +160,7 @@ class user {
       return res.send('User successfully enabled!');
     }
     return res.status(201).json({
-      message: 'User not found!',
+      message: "User not found!",
     });
   }
 
@@ -166,7 +179,7 @@ class user {
       if (userFound.id === signInId) {
         return res.send( 'You can\'t disable yourself');
       }
-      await userFound.set({ enabled: false }); 
+      await userFound.set({ enabled: false });
       userFound.save();
       return res.send('User successfully disabled!');
     }

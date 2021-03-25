@@ -1,8 +1,13 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import jwt from "jwt-decode";
+
 import api from "../../services/api";
 import FormInput from "../form-input/formInput.component";
 import CustomButton from "../buttons/customButton.component";
+import { setUser } from "../../redux/user/user.action";
+
 import "./signin.style.css";
 
 class SignIn extends React.Component {
@@ -18,22 +23,22 @@ class SignIn extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-
-    const { history } = this.props;
     const { email, password } = this.state;
 
     try {
       const response = await api.post("/login", { email, password });
-      const userId = response.data._id || false;
+      const token = response.data.token || false;
 
-      if (userId) {
-        localStorage.setItem("user", userId);
+      if (token) {
+        const { history } = this.props;
+        const user = jwt(token);
+        this.props.setUser(user);
         history.push("/dashboard");
       } else {
-        this.setState({ error: response.data.message });
+        setTimeout(() => this.setState({ error: response.data.message }), 3000);
       }
     } catch (error) {
-      this.setState({ error: error.message });
+      console.log(error);
     }
   };
 
@@ -77,4 +82,8 @@ class SignIn extends React.Component {
   }
 }
 
-export default withRouter(SignIn);
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => dispatch(setUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignIn));
