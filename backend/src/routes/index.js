@@ -1,9 +1,11 @@
 const express = require('express');
 const user = require('../controllers/userController');
 const ride = require('../controllers/rideController');
+const request = require('../controllers/requestController')
 const  verifyToken = require('../middlewares/verifyToken');
 const  {isUserValid, isUserAdmin }  = require('../middlewares/checkAuth') ;
 const { validateSignup, validateSignin, validateEdit } = require('../middlewares/userCredentials');
+const { validateCreateRide } = require('../middlewares/rideCredentials');
 
 const app = express.Router();  
 
@@ -20,6 +22,11 @@ app.put('/disable/:userId', verifyToken, isUserAdmin, user.disableUser);
 app.delete('/delete/:userId', verifyToken, isUserAdmin, user.deleteUser);
 
 // Ride Routes
-app.post('/rides', verifyToken, isUserValid, ride.create); //validateRideInput
+app.get('/rides', ride.getAllRides)
+app.post('/rides', verifyToken, isUserValid, validateCreateRide, ride.create); //validateRideInput
+
+
+// Request Routes
+app.post('/requests', verifyToken, isUserValid, request.create);
 
 module.exports = app;

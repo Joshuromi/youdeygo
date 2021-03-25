@@ -18,17 +18,32 @@ class ride {
     const driverName = `${userFound.firstName} ${userFound.lastName}`;
     const driverPhone = userFound.phoneNumber;
 
-    const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost, message } = req.body
+    const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost, description } = req.body
 
     const newRide = new rideModel({ userId, driverName, driverPhone, carName, plateNumber, driverPhone, depature,
-      destination, time, scheduleDate, seats, cost, message, createdAt: today, updatedAt: today});
+      destination, time, scheduleDate, seats, cost, description, createdAt: today, updatedAt: today});
 
     const ride = await newRide.save();
-    return res.status(200).json({
+    return res.send({
       message: 'Ride created successfully!',
         ride
     });
   }
+
+  /**
+   * @description fetch all rides from database
+   * @method GET
+   * @param {*} req
+   * @param {*} res
+   */
+  static async getAllRides(req, res) {
+    const allRides = await rideModel.find();
+    if (allRides.length > 0) {
+      return res.send(allRides);
+    }
+    return res.send('No rides created yet!');
+  }
+  
 }
 
 module.exports = ride;

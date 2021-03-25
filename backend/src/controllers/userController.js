@@ -61,14 +61,11 @@ class user {
             token: createToken(userFound),
           });
         }
-        return res.send({
-          message: "Email and password not match!",
-        });
+        return res.send('Email and password not match!');
       });
     } else {
-      return res.send({
-        message: "Access denied!",
-      });
+      return res.send('Access denied!');
+
     }
   }
 
@@ -91,14 +88,14 @@ class user {
         updatedAt: today,
       });
       userFound.save();
-      return res.status(200).json({
-        message: "User updated successfully!",
+
+      return res.send({
+        message: 'User updated successfully!',
         userFound,
       });
     }
-    return res.status(404).json({
-      message: "User not found",
-    });
+    return res.send('User not found');
+
   }
 
   /**
@@ -110,14 +107,14 @@ class user {
   static async getAllUsers(req, res) {
     const allUsers = await userModel.find();
     if (allUsers.length > 0) {
-      return res.status(200).json({
-        message: "Success",
-        users: allUsers,
+
+      return res.send({
+        message: 'Success',
+        allUsers,
       });
     }
-    return res.status(200).json({
-      message: "No registered user yet!",
-    });
+    return res.send( 'No registered user yet!');
+
   }
 
   /**
@@ -130,17 +127,17 @@ class user {
     const userId = req.params.userId;
     const userFound = await userModel.findById(userId);
     if (userFound) {
-      const rides = await rideModel.find({ userId: userFound.id });
-      const rideCreated = rides.length > 0 ? rides : "No ride created yet!";
-      return res.status(200).json({
-        message: "Success",
+      const rides = await rideModel.find({userId: userFound.id});
+      const rideCreated = rides.length > 0 ? rides : 'No ride created yet!'
+      return res.send({
+        message: 'Success',
         userFound,
         rideCreated,
       });
     }
-    return res.status(404).json({
-      message: "User not found!",
-    });
+
+    return res.send('User not found!') ;
+
   }
   /**
    * @description Enable a User
@@ -155,15 +152,12 @@ class user {
     const userFound = await userModel.findById(userId);
     if (userFound) {
       if (userFound.id === signInId) {
-        return res.status(403).json({
-          message: "You can't enable yourself",
-        });
+
+        return res.send('You can\'t enable yourself');
       }
       await userFound.set({ enabled: true });
       userFound.save();
-      return res.status(200).json({
-        message: "User successfully enabled!",
-      });
+      return res.send('User successfully enabled!');
     }
     return res.status(201).json({
       message: "User not found!",
@@ -183,19 +177,13 @@ class user {
     const userFound = await userModel.findById(userId);
     if (userFound) {
       if (userFound.id === signInId) {
-        return res.status(403).json({
-          message: "You can't disable yourself",
-        });
+        return res.send( 'You can\'t disable yourself');
       }
       await userFound.set({ enabled: false });
       userFound.save();
-      return res.status(200).json({
-        message: "User successfully disabled!",
-      });
+      return res.send('User successfully disabled!');
     }
-    return res.status(201).json({
-      message: "User not found!",
-    });
+    return res.send('User not found!');
   }
 
   /**
@@ -210,18 +198,12 @@ class user {
     const userFound = await userModel.findById(userId);
     if (userFound) {
       if (userFound.id === signInId) {
-        return res.status(403).json({
-          message: "You can't delete yourself",
-        });
+        return res.send('You can\'t delete yourself');
       }
-      await userModel.deleteOne({ _id: userId });
-      return res.status(200).json({
-        message: "User successfully deleted!",
-      });
+      await userModel.deleteOne({_id: userId});
+      return res.send('User successfully deleted!');
     }
-    return res.status(201).json({
-      message: "User not found!",
-    });
+    return res.send('User not found!');
   }
 }
 
