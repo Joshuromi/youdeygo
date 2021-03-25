@@ -10,7 +10,7 @@ class validations {
      * @returns {Array} createRideErrors
      */
     static async validateRideCreation(body, userId) { 
-     const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost, description } = body 
+     const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost } = body 
     const duplicateTime = await rideModel.findOne({time, userId})
     const createRideErrors = {};
 
@@ -38,8 +38,8 @@ class validations {
         createRideErrors.message = 'Available seats must be valid numbers';
     }
     
-    if (!seats || !validNumber.test(seats)) {
-        createRideErrors.message = 'Available seats must be valid numbers';
+    if (!cost || !validNumber.test(cost)) {
+        createRideErrors.message = 'Price is required and must be valid numbers';
     }
 
     if (!time || !validTime.test(time)) {
