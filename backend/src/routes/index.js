@@ -1,6 +1,7 @@
 const express = require('express');
 const user = require('../controllers/userController');
 const ride = require('../controllers/rideController');
+const request = require('../controllers/requestController')
 const  verifyToken = require('../middlewares/verifyToken');
 const  {isUserValid, isUserAdmin }  = require('../middlewares/checkAuth') ;
 const { validateSignup, validateSignin, validateEdit } = require('../middlewares/userCredentials');
@@ -22,5 +23,9 @@ app.delete('/delete/:userId', verifyToken, isUserAdmin, user.deleteUser);
 // Ride Routes
 app.get('/rides', ride.getAllRides)
 app.post('/rides', verifyToken, isUserValid, ride.create); //validateRideInput
+
+
+// Request Routes
+app.post('/requests', verifyToken, isUserValid, request.create);
 
 module.exports = app;

@@ -23,39 +23,27 @@ class validations {
     const emailAlreadyExist = await checkEmail(email); 
 
     if (!firstName || firstName.length < 3 || !validName.test(firstName)) {
-      signupErrors.firstName = [];
-      signupErrors.firstName.push(
-        'First name is required, with at least three alphabetical characters'
-      );
+      signupErrors.message =  'First name is required, with at least three alphabetical characters';
     }
    
     if (!lastName || lastName.length < 3 || !validName.test(lastName)) {
-      signupErrors.lastName = [];
-      signupErrors.lastName.push(
-        'Last name is required, with at least three alphabetical characters'
-      );
+      signupErrors.message = 'Last name is required, with at least three alphabetical characters';
     } 
     
     if (!email || !validEmail.test(email)) {
-      signupErrors.email = [];
-      signupErrors.email.push('Invalid Email Format');
+      signupErrors.message = 'Invalid Email Format';
     }
 
     if (emailAlreadyExist) {
-      signupErrors.email = [];
-      signupErrors.email.push('Email already exist');
+      signupErrors.message = 'Email already exist';
     }
 
     if (!password || password.length < 3) {
-      signupErrors.password = [];
-      signupErrors.password.push(
-        'Password is required, with at least three characters'
-      );
+      signupErrors.message = 'Password is required, with at least three characters';
     }
 
     if (!confirmPassword || confirmPassword !== password) {
-      signupErrors.confirmPassword = [];
-      signupErrors.confirmPassword.push("Passwords don't match");
+      signupErrors.message = 'Passwords don\'t match';
     }
     return signupErrors;
   }
@@ -71,13 +59,11 @@ class validations {
     const signinErrors = {};
 
     if (!email || !validEmail.test(email)) {
-      signinErrors.email = [];
-      signinErrors.email.push('Invalid Email Format');
+      signinErrors.message = 'Invalid Email Format';
     }
 
     if (!password || password.length < 2) {
-      signinErrors.password = [];
-      signinErrors.password.push('Password must be at least three characters');
+      signinErrors.message = 'Password must be at least three characters';
     }
 
     return signinErrors;
@@ -96,21 +82,14 @@ class validations {
     const phoneNumberAlreadyExist = await checkPhoneNumber(phoneNumber);
 
     if (!firstName || firstName.length < 3 || !validName.test(firstName)) {
-      signupErrors.firstName = [];
-      signupErrors.firstName.push(
-        'First name is required, with at least three alphabetical characters'
-      );
+      editErrors.message = 'First name is required, with at least three alphabetical characters';
     }
    
     if (!lastName || lastName.length < 3 || !validName.test(lastName)) {
-      signupErrors.lastName = [];
-      signupErrors.lastName.push(
-        'Last name is required, with at least three alphabetical characters'
-      );
+      editErrors.message = 'Last name is required, with at least three alphabetical characters';
     }
     if (!email || !validEmail.test(email)) {
-      editErrors.email = [];
-      editErrors.email.push('Invalid Email Format');
+      editErrors.message = 'Invalid Email Format';
     }
    
     if (emailAlreadyExist !== null && emailAlreadyExist.email.length > 0 && emailAlreadyExist.id !== userId
@@ -119,16 +98,14 @@ class validations {
         editErrors.email.push('User with this email already exist');
       }
     if (!phoneNumber || !validPhoneNumber.test(phoneNumber)) {
-      editErrors.phoneNumber = [];
-      editErrors.phoneNumber.push('Phone Number is required and must be up to 11 digits');
+      editErrors.message = 'Phone Number is required and must be up to 11 digits';
     }
 
     if (phoneNumberAlreadyExist !== null
       && phoneNumberAlreadyExist.phoneNumber.length > 0
       && phoneNumberAlreadyExist.id !== userId
     ) {
-      editErrors.phoneNumber = [];
-      editErrors.phoneNumber.push('User with this phone number already exist');
+      editErrors.message = 'User with this phone number already exist';
     }
     return editErrors;
   }

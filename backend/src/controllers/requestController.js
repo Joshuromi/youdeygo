@@ -23,18 +23,36 @@ class ride {
     const passengerName = `${userFound.firstName} ${userFound.lastName}`;
 
     const passengerPhone = userFound.phoneNumber;
-    const { seats, message } = req.body;
     const { carName, plateNumber, depature, destination, time, scheduleDate, cost, message } = rideFound
 
-    const newRide = new requestModel({ userId, rideId, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature,
-      destination, time, scheduleDate, seats, cost, message, createdAt: today, updatedAt: today});
+    if (rideFound) {
+        const { seats, message } = req.body;  
+        const newRequest = new requestModel({ userId, rideId, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, time, scheduleDate, seats, cost, message, createdAt: today, updatedAt: today});
 
-    const ride = await newRide.save();
-    return res.status(200).json({
-      message: 'Ride created successfully!',
-        ride
+        const ride = await newRequest.save();
+        return res.send( ride );
+    }
+    return res.send('Ride not found');
+
+  }
+
+  static async createComment(req, res) {
+    const postId = parseInt(req.params.postId);
+    const date = new Date().toDateString();
+    const postFound = await Post.findOne({
+      where: { id: postId }
     });
+    if (postFound) {
+      const { visitorName, visitorEmail, content } = req.body;
+      await Comment.create({
+        postId, visitorName, visitorEmail, content, date
+      });
+      return res.send('Comment appended successfully!');
+    }
+    return res.send('Post not found, comment not appended');
   }
 }
 
 module.exports = ride;
+
+

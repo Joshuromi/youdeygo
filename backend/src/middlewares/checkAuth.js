@@ -5,9 +5,7 @@ const isUserValid = async ({ decoded: { userId } }, res, next) => {
   if (userFound) {
     return next();
   }
-  return res.status(404).json({
-    message: 'Login First'
-  });
+  return res.send('Login First');
 };
 
  const isUserAdmin = async ({ decoded: { userId } }, res, next) => {
@@ -15,9 +13,7 @@ const isUserValid = async ({ decoded: { userId } }, res, next) => {
   if (userFound.role === 1) {
     return next();
   }
-  return res.status(401).json({
-    message: 'Only Admin is allowed!'
-  });
+  return res.send('Only Admin is allowed!');
 };
 
 module.exports = { isUserValid, isUserAdmin }

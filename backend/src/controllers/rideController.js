@@ -24,7 +24,7 @@ class ride {
       destination, time, scheduleDate, seats, cost, message, createdAt: today, updatedAt: today});
 
     const ride = await newRide.save();
-    return res.status(200).json({
+    return res.send({
       message: 'Ride created successfully!',
         ride
     });
@@ -39,14 +39,9 @@ class ride {
   static async getAllRides(req, res) {
     const allRides = await rideModel.find();
     if (allRides.length > 0) {
-      return res.status(200).json({
-        message: 'Success',
-        allRides,
-      });
+      return res.send(allRides);
     }
-    return res.status(200).json({
-      message: 'No rides created yet!',
-    });
+    return res.send('No rides created yet!');
   }
   
 }

@@ -11,14 +11,10 @@ const verifyToken = (req, res, next) => {
       req.decoded = jwt.verify(token, secret);
       next();
     } catch (error) {
-      return res.status(401).json({
-        message: 'Auth failed'
-      });
+      return res.send('Auth failed');
     }
   } else {
-    return res.status(401).json({
-      message: 'Token not provided'
-    });
+    return res.send('Token not provided');
   }
 };
 
