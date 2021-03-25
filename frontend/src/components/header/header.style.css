@@ -2,7 +2,7 @@
   height: 80px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   padding: 0 5%;
   position: fixed;
   background-color: #fff;
@@ -53,6 +53,15 @@
   z-index: 2;
   align-self: center;
   cursor: pointer;
+}
+
+.displayName {
+  padding: 15px;
+  color: #488eff;
+}
+
+.displayName:hover {
+  color: #3669bb;
 }
 
 .none {

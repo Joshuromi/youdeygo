@@ -1,5 +1,5 @@
-import React from "react";
 import { Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Sidebar from "../../components/sidebar/sidebar.component";
 import Form from "../../components/form/form.component";
@@ -8,35 +8,22 @@ import AllTrips from "../all-trips/allTrips";
 
 import "./dashboard.style.css";
 
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: "",
-    };
-  }
+const Dashboard = ({ currentUser: { firstName, lastName } }) => (
+  <div className="dashboard">
+    <Sidebar displayName={firstName} />
+    <div className="informations">
+      <h3>Welcome, {`${firstName} ${lastName}`}</h3>
+      <Switch>
+        <Route exact path="/dashboard" component={YourTrips} />
+        <Route path="/dashboard/alltrips" component={AllTrips} />
+        <Route path="/dashboard/postorfind" component={Form} />
+      </Switch>
+    </div>
+  </div>
+);
 
-  componentDidMount() {
-    this.setState({ user: JSON.parse(localStorage.getItem("token")) });
-  }
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
 
-  render() {
-    console.log(this.state.user);
-    const { firstName, lastName } = this.state.user;
-    return (
-      <div className="dashboard">
-        <Sidebar displayName={firstName} />
-        <div className="informations">
-          <h3>Welcome, {`${firstName} ${lastName}`}</h3>
-          <Switch>
-            <Route exact path="/dashboard" component={YourTrips} />
-            <Route path="/dashboard/alltrips" component={AllTrips} />
-            <Route path="/dashboard/postorfind" component={Form} />
-          </Switch>
-        </div>
-      </div>
-    );
-  }
-}
-
-export default Dashboard;
+export default connect(mapStateToProps)(Dashboard);

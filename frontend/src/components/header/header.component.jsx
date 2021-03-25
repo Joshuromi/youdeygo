@@ -1,4 +1,4 @@
-import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../../assests/logo.png";
 import "./header.style.css";
@@ -8,39 +8,51 @@ const toogle = () => {
   nav.classList.toggle("none");
 };
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return (
-      <div className="header">
-        <div className="logo-div">
-          <Link to="/">
-            <img className="logo" src={Logo} alt="logo" />
-          </Link>
-        </div>
-        <div className="links" id="nav" onClick={toogle}>
-          <Link to="/" className="link">
-            Home
-          </Link>
-          <Link to="/howitworks" className="link">
-            How it works
-          </Link>
-          <Link to="/about" className="link">
-            About
-          </Link>
-          <Link to="/signin">
-            <div className="signin">Sign in</div>
-          </Link>
-        </div>
-        <div className="bar" onClick={toogle}>
-          <i className="fa fa-bars"></i>
-        </div>
-      </div>
-    );
-  }
-}
+const signOut = () => {
+  localStorage.setItem("token", "");
+};
 
-export default Header;
+const Header = ({ currentUser: { firstName } }) => (
+  <div className="header">
+    <div className="logo-div">
+      <Link to="/">
+        <img className="logo" src={Logo} alt="logo" />
+      </Link>
+    </div>
+    <div className="links" id="nav" onClick={toogle}>
+      <Link to="/" className="link">
+        Home
+      </Link>
+      <Link to="/howitworks" className="link">
+        How it works
+      </Link>
+      <Link to="/about" className="link">
+        About
+      </Link>
+      <Link to="/signin">
+        {firstName ? (
+          <div className="signin" onClick={signOut}>
+            Sign out
+          </div>
+        ) : (
+          <div className="signin">Sign in</div>
+        )}
+      </Link>
+      {firstName ? (
+        <Link to="/dashboard">
+          <p className="displayName">Hi {firstName}</p>
+        </Link>
+      ) : null}
+    </div>
+
+    <div className="bar" onClick={toogle}>
+      <i className="fa fa-bars"></i>
+    </div>
+  </div>
+);
+
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(Header);

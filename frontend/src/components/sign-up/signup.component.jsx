@@ -1,8 +1,12 @@
 import React from "react";
 import jwt from "jwt-decode";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
 import FormInput from "../form-input/formInput.component";
 import CustomButton from "../buttons/customButton.component";
-import { withRouter } from "react-router-dom";
+
+import { setUser } from "../../redux/user/user.action";
 import api from "../../services/api";
 import "./signup.style.css";
 
@@ -13,7 +17,6 @@ class SignUp extends React.Component {
       firstName: "",
       lastName: "",
       email: "",
-      phoneNumber: "",
       password: "",
       confirmPassword: "",
       error: "",
@@ -22,7 +25,6 @@ class SignUp extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-
     const {
       firstName,
       lastName,
@@ -30,8 +32,6 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
     } = this.state;
-
-    const { history } = this.props;
 
     if (password.length < 6 || password.length > 18) {
       this.setState({ error: "Password must be 6 - 18 characters" });
@@ -56,18 +56,16 @@ class SignUp extends React.Component {
 
       const token = response.data.token || false;
 
-      console.log(response.data);
-
       if (token) {
+        const { history } = this.props;
         const user = jwt(token);
-        localStorage.setItem("token", JSON.stringify(user));
+        this.props.setUser(user);
         history.push("/dashboard");
       } else {
-        this.setState({ error: response.data.message });
+        setTimeout(() => this.setState({ error: response.data.message }), 3000);
       }
     } catch (error) {
       console.log(error);
-      // this.setState({ error: error.message });
     }
   };
 
@@ -138,4 +136,8 @@ class SignUp extends React.Component {
   }
 }
 
-export default withRouter(SignUp);
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => dispatch(setUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignUp));
