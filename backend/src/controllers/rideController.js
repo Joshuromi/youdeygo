@@ -18,10 +18,10 @@ class ride {
     const driverName = `${userFound.firstName} ${userFound.lastName}`;
     const driverPhone = userFound.phoneNumber;
 
-    const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost, message } = req.body
+    const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost, description } = req.body
 
     const newRide = new rideModel({ userId, driverName, driverPhone, carName, plateNumber, driverPhone, depature,
-      destination, time, scheduleDate, seats, cost, message, createdAt: today, updatedAt: today});
+      destination, time, scheduleDate, seats, cost, description, createdAt: today, updatedAt: today});
 
     const ride = await newRide.save();
     return res.send({
