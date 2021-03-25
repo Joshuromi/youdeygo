@@ -5,6 +5,7 @@ const request = require('../controllers/requestController')
 const  verifyToken = require('../middlewares/verifyToken');
 const  {isUserValid, isUserAdmin }  = require('../middlewares/checkAuth') ;
 const { validateSignup, validateSignin, validateEdit } = require('../middlewares/userCredentials');
+const { validateCreateRide } = require('../middlewares/rideCredentials');
 
 const app = express.Router();  
 
@@ -22,7 +23,7 @@ app.delete('/delete/:userId', verifyToken, isUserAdmin, user.deleteUser);
 
 // Ride Routes
 app.get('/rides', ride.getAllRides)
-app.post('/rides', verifyToken, isUserValid, ride.create); //validateRideInput
+app.post('/rides', verifyToken, isUserValid, validateCreateRide, ride.create); //validateRideInput
 
 
 // Request Routes
