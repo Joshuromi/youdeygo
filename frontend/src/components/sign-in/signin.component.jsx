@@ -1,8 +1,10 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import jwt from "jwt-decode";
 import api from "../../services/api";
 import FormInput from "../form-input/formInput.component";
 import CustomButton from "../buttons/customButton.component";
+
 import "./signin.style.css";
 
 class SignIn extends React.Component {
@@ -26,14 +28,18 @@ class SignIn extends React.Component {
       const response = await api.post("/login", { email, password });
       const token = response.data.token || false;
 
+      console.log(response.data);
+
       if (token) {
-        localStorage.setItem("token", token);
+        const user = jwt(token);
+        localStorage.setItem("token", JSON.stringify(user));
         history.push("/dashboard");
       } else {
         this.setState({ error: response.data.message });
       }
     } catch (error) {
-      this.setState({ error: error.message });
+      console.log(error);
+      // this.setState({ error: error.message });
     }
   };
 

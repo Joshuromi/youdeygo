@@ -55,11 +55,11 @@ class SignUp extends React.Component {
       });
 
       const token = response.data.token || false;
-      const user = jwt(token);
 
       console.log(response.data);
 
       if (token) {
+        const user = jwt(token);
         localStorage.setItem("token", JSON.stringify(user));
         history.push("/dashboard");
       } else {
@@ -67,7 +67,7 @@ class SignUp extends React.Component {
       }
     } catch (error) {
       console.log(error);
-      this.setState({ error: error.message });
+      // this.setState({ error: error.message });
     }
   };
 
