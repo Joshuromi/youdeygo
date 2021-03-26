@@ -14,6 +14,7 @@ const requestSchema = new mongoose.Schema({
     time: String,
     seats: Number,
     cost: Number,
+    price: Number,
     message: String,
     status: String,
     createdAt: String,

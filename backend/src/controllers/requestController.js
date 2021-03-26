@@ -26,9 +26,11 @@ class ride {
     const status = 'Pending';
     if (rideFound) {
         const { seats, message } = req.body;  
-    const { carName, plateNumber, driverPhone, driverName, depature, destination, time, scheduleDate, cost, description } = rideFound;
-    const availableSeats = rideFound.seats - seats;
-        const newRequest = new requestModel({ userId, rideId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, cost, message, status, createdAt: today, updatedAt: today});
+        const { carName, plateNumber, driverPhone, driverName, depature, destination, time, scheduleDate, price, description } = rideFound;
+        const availableSeats = rideFound.seats - seats; // Reduce available ride seats wrt requestes seat(s) 
+        const cost = rideFound.price * seats; // Calculate the amount passenger pays wrt requested seat(s)
+
+        const newRequest = new requestModel({ userId, rideId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, price, cost, message, status, createdAt: today, updatedAt: today});
 
         const request = await newRequest.save();
         if (request) { 
