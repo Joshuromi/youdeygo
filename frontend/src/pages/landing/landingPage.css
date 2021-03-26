@@ -75,6 +75,7 @@ h2 {
 .howitworks-description {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding-top: 10px;
 }
 
@@ -111,4 +112,44 @@ h2 {
 i {
   color: #488eff;
   margin-right: 10px;
+}
+
+@media (max-width: 800px) {
+  .intro {
+    height: 100vh;
+  }
+
+  .howitworks-description {
+    flex-direction: column;
+    margin: auto;
+  }
+
+  .car-owners {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .riders {
+    width: 100%;
+  }
+
+  .card {
+    max-width: 500px;
+  }
+
+  .about {
+    flex-direction: column;
+  }
+
+  .about-image {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+  }
+
+  .about-text {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+  }
 }

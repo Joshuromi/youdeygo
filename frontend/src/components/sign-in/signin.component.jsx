@@ -1,6 +1,13 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import jwt from "jwt-decode";
+
+import api from "../../services/api";
 import FormInput from "../form-input/formInput.component";
 import CustomButton from "../buttons/customButton.component";
+import { setUser } from "../../redux/user/user.action";
+
 import "./signin.style.css";
 
 class SignIn extends React.Component {
@@ -10,12 +17,29 @@ class SignIn extends React.Component {
     this.state = {
       email: "",
       password: "",
+      error: "",
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(this.state);
+    const { email, password } = this.state;
+
+    try {
+      const response = await api.post("/login", { email, password });
+      const token = response.data.token || false;
+
+      if (token) {
+        const { history } = this.props;
+        const user = jwt(token);
+        this.props.setUser(user);
+        history.push("/dashboard");
+      } else {
+        setTimeout(() => this.setState({ error: response.data.message }), 3000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   handleChange = (event) => {
@@ -24,13 +48,14 @@ class SignIn extends React.Component {
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, error } = this.state;
     return (
       <div className="sign-in">
         <h2 className="title">Sign in</h2>
         <p>
           Already have an account? Sign in here with your email and password
         </p>
+        <div className="error">{error ? <p>{error}</p> : null}</div>
         <form className="signin-form" onSubmit={this.handleSubmit}>
           <FormInput
             name="email"
@@ -57,4 +82,8 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn;
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => dispatch(setUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignIn));

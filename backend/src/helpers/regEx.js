@@ -3,7 +3,10 @@
 */
 const validName = /^[a-zA-z]{2,20}$/;
 
-const validFullName = /(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
+/**
+* @description check valid number
+*/
+const validNumber = /^[0-9]*$/;
 
 /**
 * @description check valid phone number
@@ -15,4 +18,9 @@ const validPhoneNumber = /^[0-9]{11}$/;
 */
 const validEmail = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 
-module.exports = { validName, validFullName, validEmail, validPhoneNumber };
+/**
+ * @description check valid time
+*/
+const validTime =  /((1[0-2]|0?[1-9]):([0-5][0-9]) ?([ap][m]))/;
+
+module.exports = { validName, validNumber, validPhoneNumber, validEmail, validTime };
