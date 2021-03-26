@@ -23,7 +23,7 @@ class user {
       const createUser = new userModel({
         firstName,
         lastName,
-        email,
+        email: email.toLowerCase(),
         password: hash,
         enabled: true,
         verified: false,
@@ -47,7 +47,7 @@ class user {
    */
   static async login(req, res) {
     const { email, password } = req.body;
-    const userFound = await userModel.findOne({ email, enabled: true });
+    const userFound = await userModel.findOne({ email: email.toLowerCase(), enabled: true });
     if (userFound) {
       await bcrypt.compare(password, userFound.password, (error, result) => {
         if (result) {

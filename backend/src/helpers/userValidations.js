@@ -2,7 +2,7 @@ const userModel = require("../models/userModel");
 const  { validName, validEmail, validPhoneNumber } = require('./regEx') ;
 
 // Check if email already in the database
-const checkEmail = (email) => userModel.findOne({ email });
+const checkEmail = (email) => userModel.findOne({ email : email.toLowerCase() });
 
 // Check if phoneNumber already in the database
 const checkPhoneNumber = (phoneNumber) => userModel.findOne({  phoneNumber }); 
@@ -94,8 +94,7 @@ class validations {
    
     if (emailAlreadyExist !== null && emailAlreadyExist.email.length > 0 && emailAlreadyExist.id !== userId
       ) {
-        editErrors.email = [];
-        editErrors.email.push('User with this email already exist');
+        editErrors.message = 'User with this email already exist';
       }
     if (!phoneNumber || !validPhoneNumber.test(phoneNumber)) {
       editErrors.message = 'Phone Number is required and must be up to 11 digits';
