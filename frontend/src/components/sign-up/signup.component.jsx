@@ -1,7 +1,12 @@
 import React from "react";
+import jwt from "jwt-decode";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
 import FormInput from "../form-input/formInput.component";
 import CustomButton from "../buttons/customButton.component";
-import { withRouter } from "react-router-dom";
+
+import { setUser } from "../../redux/user/user.action";
 import api from "../../services/api";
 import "./signup.style.css";
 
@@ -9,9 +14,9 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: "",
+      firstName: "",
+      lastName: "",
       email: "",
-      phoneNumber: "",
       password: "",
       confirmPassword: "",
       error: "",
@@ -20,9 +25,13 @@ class SignUp extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-
-    const { displayName, email, password, confirmPassword } = this.state;
-    const { history } = this.props;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    } = this.state;
 
     if (password.length < 6 || password.length > 18) {
       this.setState({ error: "Password must be 6 - 18 characters" });
@@ -38,23 +47,25 @@ class SignUp extends React.Component {
 
     try {
       const response = await api.post("/register", {
-        fullName: displayName,
+        firstName,
+        lastName,
         email,
         password,
+        confirmPassword,
       });
 
-      const userId = response.data._id || false;
+      const token = response.data.token || false;
 
-      console.log(userId);
-
-      if (userId) {
-        localStorage.setItem("user", userId);
+      if (token) {
+        const { history } = this.props;
+        const user = jwt(token);
+        this.props.setUser(user);
         history.push("/dashboard");
       } else {
-        this.setState({ error: response.data.message });
+        setTimeout(() => this.setState({ error: response.data.message }), 3000);
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
 
@@ -65,9 +76,9 @@ class SignUp extends React.Component {
 
   render() {
     const {
-      displayName,
+      firstName,
+      lastName,
       email,
-      phoneNumber,
       password,
       confirmPassword,
       error,
@@ -80,10 +91,18 @@ class SignUp extends React.Component {
         <form className="sign-up-form" onSubmit={this.handleSubmit}>
           <FormInput
             type="text"
-            name="displayName"
-            value={displayName}
+            name="firstName"
+            value={firstName}
             handleChange={this.handleChange}
-            label="Display Name"
+            label="First Name"
+            required
+          />
+          <FormInput
+            type="text"
+            name="lastName"
+            value={lastName}
+            handleChange={this.handleChange}
+            label="Last Name"
             required
           />
           <FormInput
@@ -92,14 +111,6 @@ class SignUp extends React.Component {
             value={email}
             handleChange={this.handleChange}
             label="Email"
-            required
-          />
-          <FormInput
-            type="text"
-            name="phoneNumber"
-            value={phoneNumber}
-            handleChange={this.handleChange}
-            label="Phone Number"
             required
           />
           <FormInput
@@ -125,4 +136,8 @@ class SignUp extends React.Component {
   }
 }
 
-export default withRouter(SignUp);
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => dispatch(setUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignUp));

@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import "./sidebar.style.css";
 import Pp from "../../assests/pp.png";
 
-const Sidebar = () => (
+const Sidebar = ({ displayName }) => (
   <div className="sidebar">
     <div className="profile-img">
       <img src={Pp} alt="profile" />
-      <p>DisplayName</p>
+      <p>{displayName}</p>
     </div>
     <div className="tabs">
       <Link to="/dashboard">
