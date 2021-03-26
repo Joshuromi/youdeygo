@@ -23,7 +23,8 @@ app.patch('/disable/:userId', verifyToken, isUserAdmin, user.disableUser);
 app.delete('/delete/:userId', verifyToken, isUserAdmin, user.deleteUser);
 
 // Ride Routes
-app.get('/rides', ride.getAllRides)
+app.get('/rides', ride.getAllRides);
+app.get('/rides/:rideId', ride.getSingleRide);
 app.post('/rides', verifyToken, isUserValid, validateCreateRide, ride.create);
 
 

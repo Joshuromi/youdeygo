@@ -47,7 +47,7 @@ class validations {
       }
 
     if (duplicateTime !== null && duplicateTime.seats > 0 ) {
-    createRideErrors.message = 'You already have an incomplete tide at this same time';
+    createRideErrors.message = 'You already have available ride at this same time';
     }
     
       return createRideErrors;

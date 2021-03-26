@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel');
 const rideModel = require('../models/rideModel');
+const requestModel = require('../models/requestModel')
 
 
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -42,6 +43,29 @@ class ride {
       return res.send(allRides);
     }
     return res.send('No rides created yet!');
+  }
+
+  /**
+   * @description fetch a single user from database
+   * @method GET/:userId
+   * @param {*} req
+   * @param {*} res
+   */
+  static async getSingleRide(req, res) {
+    const rideId = req.params.rideId;
+    const rideFound = await rideModel.findById(rideId);
+    if (rideFound) {
+      const request = await requestModel.find({rideId: rideFound.id});
+      const requestsMade = request.length > 0 ? request : 'No request for this ride yet!'
+      return res.send({
+        message: 'Success',
+        rideFound,
+        requestsMade,
+      });
+    }
+
+    return res.send('Ride not found!') ;
+
   }
   
 }

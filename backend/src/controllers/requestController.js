@@ -23,15 +23,14 @@ class ride {
     const passengerName = `${userFound.firstName} ${userFound.lastName}`;
 
     const passengerPhone = userFound.phoneNumber;
-    const { carName, plateNumber, depature, destination, time, scheduleDate, cost, description } = rideFound
     const status = 'Pending';
     if (rideFound) {
         const { seats, message } = req.body;  
-        const newRequest = new requestModel({ userId, rideId, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, cost, message, status, createdAt: today, updatedAt: today});
-
+    const { carName, plateNumber, driverPhone, driverName, depature, destination, time, scheduleDate, cost, description } = rideFound;
+        const newRequest = new requestModel({ userId, rideId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, cost, message, status, createdAt: today, updatedAt: today});
         const request = await newRequest.save();
         return res.send( { 
-          message: 'You\'ve successfully requested for this ride offder',
+          message: 'You\'ve successfully requested for this ride offer',
            request
           } );
     }

@@ -1,6 +1,6 @@
 const rideModel = require('../models/rideModel');
 const  { validNumber } = require('./regEx') ; 
-const getRide = (rideId) =>  rideModel.findOne({ rideId })
+const getRide = (rideId) =>  rideModel.findOne({ _id: rideId })
 
 
 class validations {
@@ -15,13 +15,13 @@ class validations {
     const createRequestErrors = {};
     const selectedRide = await getRide(rideId);
 
-    if (!seats || !validNumber.test(seats)) {
-        createRequestErrors.message = 'Available seats must be valid numbers';
+    if (!seats ||seats == 0 || !validNumber.test(seats)) {
+        createRequestErrors.message = 'Available seat is required and must be valid numbers';
     }  
     if (selectedRide !== null && selectedRide.seats < seats ) {
-    createRequestErrors.message = 'You already have an incomplete tide at this same time';
+    createRequestErrors.message = 'Your request is more than available seats';
     }
-    if (userId === selectedRide.userId) {
+    if (selectedRide !== null && selectedRide.userId == userId ) {
         createRequestErrors.message = 'You can\'t request for the ride you created!';
     }
     
