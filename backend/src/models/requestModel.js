@@ -10,6 +10,7 @@ const requestSchema = new mongoose.Schema({
     plateNumber: String,
     depature: String,
     destination: String,
+    description: String,
     time: String,
     seats: Number,
     cost: Number,
