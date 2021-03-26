@@ -1,5 +1,8 @@
 const INITIAL_STATE = {
-  currentUser: null,
+  currentUser: {
+    firstName: "",
+    lastName: "",
+  },
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -8,6 +11,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
+      };
+    case "REMOVE_USER":
+      return {
+        ...state,
+        currentUser: {
+          firstName: "",
+          lastName: "",
+        },
       };
     default:
       return state;

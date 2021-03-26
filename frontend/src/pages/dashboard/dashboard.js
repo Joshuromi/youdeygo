@@ -1,5 +1,5 @@
 import { Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
 import Sidebar from "../../components/sidebar/sidebar.component";
 import Form from "../../components/form/form.component";
@@ -8,7 +8,7 @@ import AllTrips from "../all-trips/allTrips";
 
 import "./dashboard.style.css";
 
-const Dashboard = ({ currentUser: { firstName, lastName } }) => (
+const Dashboard = ({ firstName, lastName }) => (
   <div className="dashboard">
     <Sidebar displayName={firstName} />
     <div className="informations">
@@ -22,8 +22,10 @@ const Dashboard = ({ currentUser: { firstName, lastName } }) => (
   </div>
 );
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
+// const mapStateToProps = (state) => ({
+//   currentUser: state.user.currentUser,
+// });
 
-export default connect(mapStateToProps)(Dashboard);
+// export default connect(mapStateToProps)(Dashboard);
+
+export default Dashboard;

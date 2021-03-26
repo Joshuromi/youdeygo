@@ -86,7 +86,7 @@
     right: 5px;
     top: 70px;
     flex-direction: column;
-    height: 180px;
+    height: fit-content;
     width: 150px;
     padding: 20px 5px;
     background-color: #fff;
