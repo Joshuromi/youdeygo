@@ -27,12 +27,18 @@ class ride {
     if (rideFound) {
         const { seats, message } = req.body;  
     const { carName, plateNumber, driverPhone, driverName, depature, destination, time, scheduleDate, cost, description } = rideFound;
+    const availableSeats = rideFound.seats - seats;
         const newRequest = new requestModel({ userId, rideId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, cost, message, status, createdAt: today, updatedAt: today});
+
         const request = await newRequest.save();
-        return res.send( { 
-          message: 'You\'ve successfully requested for this ride offer',
-           request
-          } );
+        if (request) { 
+          await rideFound.set({ seats: availableSeats });
+          rideFound.save();
+          return res.send( { 
+            message: 'You\'ve successfully requested for this ride offer',
+            request
+            } );
+        }
     }
     return res.send('Ride not found');
 
