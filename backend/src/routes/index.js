@@ -18,6 +18,7 @@ app.get('/users/:userId',verifyToken, isUserAdmin, user.getSingleUser);
 app.post('/register', validateSignup, user.register);
 app.post('/login', validateSignin, user.login);
 app.put('/edit', verifyToken, isUserValid, validateEdit, user.editProfile);
+app.patch('/profilePicture', verifyToken, isUserValid, user.uploadProfilePicture);
 app.patch('/enable/:userId', verifyToken, isUserAdmin, user.enableUser);
 app.patch('/disable/:userId', verifyToken, isUserAdmin, user.disableUser);
 app.delete('/delete/:userId', verifyToken, isUserAdmin, user.deleteUser);

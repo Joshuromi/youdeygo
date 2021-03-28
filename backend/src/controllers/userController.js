@@ -2,6 +2,9 @@ const bcrypt = require("bcryptjs");
 const createToken = require("../helpers/createToken");
 const userModel = require("../models/userModel");
 const rideModel = require("../models/rideModel");
+const cloudinary = require('../services/cloudinary');
+const upload = require('../services/multer');
+const fs = require("fs");
 
 const saltRounds = 10;
 const options = {
@@ -97,6 +100,50 @@ class user {
     return res.send('User not found');
 
   }
+  /**
+   * @description Upload profile picture
+   * @method PATCH
+   * @param {*} req
+   * @param {*} res
+   */
+  static async uploadProfilePicture (req, res) {
+    const userId = req.decoded.userId;
+    const userFound = await userModel.findById(userId);
+    await upload(req, res, async (error) => {
+      if (error) {
+        return res.status(400).json({
+          error,
+        });
+      }
+      const fileName = req.file.filename;
+  
+      const filePath = `./uploads/${fileName}`;
+  
+      const uploadImage = await cloudinary.uploader.upload(
+        filePath,
+        function (error, result) {
+          //console.log(result, error);
+        }
+      );
+  
+      fs.unlink(filePath, (result, error) => {
+        //console.log(result, error);
+      });
+      if (uploadImage) {
+        userFound.set({ 
+          profilePicture: uploadImage.secure_url,
+          updatedAt: today
+         });
+         userFound.save();
+      return res.send({
+        message: "Success",
+        data: uploadImage.secure_url
+      });
+      }
+    });
+  }
+
+
 
   /**
    * @description fetch all users from database

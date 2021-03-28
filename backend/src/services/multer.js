@@ -3,7 +3,7 @@ const path = require("path");
 
 // Storage Engine
 const storage = multer.diskStorage({
-    destination: "./public/uploads",
+    destination: "./uploads",
     filename: (req, file, callback) => {
       callback( null,  file.fieldname + "-" + Date.now() + path.extname(file.originalname) );
     },
@@ -18,7 +18,6 @@ const storage = multer.diskStorage({
         path.extname(file.originalname).toLowerCase()
       ); //get extension
       const mimeType = fileTypes.test(file.mimetype); //get mimetype
-  
       // Check Extension and Mimetype
       if (extension && mimeType) {
         callback(null, true);
