@@ -1,9 +1,9 @@
 import React from "react";
 import CustomButton from "../buttons/customButton.component";
 import FormInput from "../form-input/formInput.component";
-import "./form.style.css";
+import "./findRideForm.style.css";
 
-class Form extends React.Component {
+class FindRideForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,4 +57,4 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+export default FindRideForm;

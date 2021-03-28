@@ -59,6 +59,7 @@ class SignUp extends React.Component {
       if (token) {
         const { history } = this.props;
         const user = jwt(token);
+        user.token = token;
         this.props.setUser(user);
         history.push("/dashboard");
       } else {

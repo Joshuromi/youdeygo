@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Form from "../../components/form/form.component";
+import FindRideForm from "../../components/find-ride-form/findRideForm.component";
 import CustomButton from "../../components/buttons/customButton.component";
 import imageOne from "../../assests/young-africans.jpg";
 import imageTwo from "../../assests/car-owner.png";
@@ -14,7 +14,7 @@ const LandingPage = () => (
         <p>Share a ride | Make new friends | Earn cash</p>
       </div>
       <div className="form-div">
-        <Form />
+        <FindRideForm />
       </div>
     </div>
     <div className="howitworks">
