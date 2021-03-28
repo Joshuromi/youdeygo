@@ -21,7 +21,6 @@ class PostRide extends React.Component {
       scheduleDate: "",
       time: "",
       description: "",
-      message: "",
     };
   }
 
@@ -40,9 +39,12 @@ class PostRide extends React.Component {
       const ride = response.data.ride || false;
 
       if (ride) {
+        console.log(ride, response.data);
         const { history } = this.props;
         this.props.setRide(ride);
         history.push("./dashboard");
+      } else {
+        console.log(response.data);
       }
     } catch (error) {
       console.log(error);

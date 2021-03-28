@@ -1,5 +1,7 @@
+import { addRideToRides } from "./rides.utils";
+
 const INITIAL_STATE = {
-  rides: {},
+  userRides: [],
 };
 
 const ridesReducer = (state = INITIAL_STATE, action) => {
@@ -7,12 +9,12 @@ const ridesReducer = (state = INITIAL_STATE, action) => {
     case "SET_RIDES":
       return {
         ...state,
-        rides: action.payload,
+        userRides: addRideToRides(state.userRides, action.payload),
       };
     case "REMOVE_RIDES":
       return {
         ...state,
-        rides: {},
+        userRides: [],
       };
     default:
       return state;
