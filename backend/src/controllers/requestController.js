@@ -48,5 +48,3 @@ class ride {
 }
 
 module.exports = ride;
-
-

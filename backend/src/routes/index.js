@@ -10,7 +10,7 @@ const { validateCreateRequest } = require('../middlewares/requestCredentials');
 
 const app = express.Router();  
 
-app.get("/", (req, res) => res.send("Welcome to youDeyGo. A car pooling app")); 
+app.get("/", (req, res) => res.send("Welcome to youDeyGo. A car pooling app ...🚗")); 
 
 // User Routes
 app.get('/users',verifyToken, isUserAdmin, user.getAllUsers);
