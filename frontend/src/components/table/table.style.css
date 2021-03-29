@@ -1,5 +1,5 @@
 table {
-  border: 1px solid #ccc;
+  border: 0;
   border-collapse: collapse;
   margin: 0;
   padding: 0;
@@ -8,19 +8,40 @@ table {
 }
 
 table caption {
-  font-size: 1.5em;
+  font-size: 1.3em;
   margin: 0.5em 0 0.75em;
+}
+
+tbody {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+table thead {
+  border: none;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
 
 table tr {
   background-color: #f8f8f8;
   border: 1px solid #ddd;
   padding: 0.35em;
+  border-bottom: 3px solid #488eff;
+  display: block;
+  margin: 0.325em;
+  width: 300px;
 }
 
 table th,
 table td {
-  padding: 0.625em;
+  padding: 0.325em;
   text-align: center;
 }
 
@@ -30,51 +51,24 @@ table th {
   text-transform: uppercase;
 }
 
-@media screen and (max-width: 800px) {
-  table {
-    border: 0;
-  }
+table td {
+  border-bottom: 1px solid #ddd;
+  display: block;
+  font-size: 0.8em;
+  text-align: right;
+}
 
-  table caption {
-    font-size: 1.3em;
-  }
-
-  table thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-
-  table tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    margin-bottom: 0.625em;
-  }
-
-  table td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: 0.8em;
-    text-align: right;
-  }
-
-  table td::before {
-    /*
+table td::before {
+  /*
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
     */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
+  content: attr(data-label);
+  float: left;
+  font-weight: bold;
+  text-transform: uppercase;
+}
 
-  table td:last-child {
-    border-bottom: 0;
-  }
+table td:last-child {
+  border-bottom: 0;
 }

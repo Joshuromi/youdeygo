@@ -1,0 +1,28 @@
+.post-ride {
+  text-align: center;
+}
+
+.pr-intro-text {
+  margin-bottom: 20px;
+}
+
+.pr-form-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0.25em 0.25em 0.75em rgba(0, 0, 0, 0.25),
+    0.125em 0.125em 0.25em rgba(0, 0, 0, 0.15);
+}
+
+.pr-form-buttons {
+  margin-top: 20px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin: 10px;
+}
