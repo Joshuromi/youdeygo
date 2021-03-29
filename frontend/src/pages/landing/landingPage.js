@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+
+import AllTrips from "../all-trips/allTrips";
 import FindRideForm from "../../components/find-ride-form/findRideForm.component";
 import CustomButton from "../../components/buttons/customButton.component";
+
 import imageOne from "../../assests/young-africans.jpg";
 import imageTwo from "../../assests/car-owner.png";
 import imageThree from "../../assests/rider.jpg";
@@ -67,21 +70,26 @@ const LandingPage = () => (
       </div>
     </div>
     <div className="about">
-      <div className="about-text">
-        <h2>About</h2>
-        <p>
-          Youdeygo is a free online Community created for the purpose of
-          connecting and conveying reliable citizens of Lagos from one location
-          to the other by means of ride sharing, we ensure you get the best
-          experience during your safe travels around Lagos state.
-        </p>
-        <Link to="/about">
-          <CustomButton>Read more</CustomButton>
-        </Link>
+      <h2 className="about-heading">About</h2>
+      <div className="about-body">
+        <div className="about-text">
+          <p>
+            Youdeygo is a free online Community created for the purpose of
+            connecting and conveying reliable citizens of Lagos from one
+            location to the other by means of ride sharing, we ensure you get
+            the best experience during your safe travels around Lagos state.
+          </p>
+          <Link to="/about">
+            <CustomButton>Read more</CustomButton>
+          </Link>
+        </div>
+        <div className="about-image">
+          <img className="image" src={imageOne} alt="young africans in car" />
+        </div>
       </div>
-      <div className="about-image">
-        <img className="image" src={imageOne} alt="young africans in car" />
-      </div>
+    </div>
+    <div className="allTrips">
+      <AllTrips />
     </div>
   </div>
 );

@@ -1,6 +1,6 @@
 .input-group {
   position: relative;
-  margin: 0 1%;
+  padding: 0 20px;
 }
 
 .form-input {
@@ -12,7 +12,7 @@
   width: 100%;
   border: 1px solid #808080;
   margin: 25px auto;
-  max-width: 500px;
+  /* max-width: 500px; */
 }
 
 .form-input:focus {
@@ -38,12 +38,16 @@ label {
   font-weight: normal;
   position: absolute;
   pointer-events: none;
-  left: 5px;
+  left: 25px;
   top: 35px;
   transition: 300ms ease all;
 }
 
 @media (max-width: 800px) {
+  .input-group {
+    width: 100%;
+  }
+
   .form-input {
     margin: 15px 0;
   }

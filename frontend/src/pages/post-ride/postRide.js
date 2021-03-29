@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import swal from "sweetalert";
 
 import CustomButton from "../../components/buttons/customButton.component";
 import FormInput from "../../components/form-input/formInput.component";
@@ -42,12 +43,27 @@ class PostRide extends React.Component {
         console.log(ride, response.data);
         const { history } = this.props;
         this.props.setRide(ride);
-        history.push("./dashboard");
+        swal({
+          title: "Successful",
+          icon: "success",
+          button: "ok",
+        });
+        history.push("/dashboard");
       } else {
-        console.log(response.data);
+        swal({
+          title: response.data.message,
+          icon: "error",
+          button: "ok",
+        });
       }
     } catch (error) {
       console.log(error);
+      swal({
+        title: "Something Went Wrong",
+        text: "Please Try Again",
+        icon: "error",
+        button: "ok",
+      });
     }
   };
 

@@ -24,7 +24,7 @@ class AllTrips extends React.Component {
     const { allRides } = this.state;
     return (
       <div>
-        <h2>ALL TRIPS</h2>
+        <h2>Available Trips</h2>
         <Table rides={allRides} />
       </div>
     );
