@@ -6,9 +6,9 @@ const requestModel = require('../models/requestModel')
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 const today = new Date().toLocaleDateString('en-US', options);
 
-class ride {
+class request {
   /**
-   * @description Create  ride
+   * @description Create  request
    * @method POST
    * @param {*} req
    * @param {*} res
@@ -23,36 +23,40 @@ class ride {
     const passengerName = `${userFound.firstName} ${userFound.lastName}`;
 
     const passengerPhone = userFound.phoneNumber;
-    const { carName, plateNumber, depature, destination, time, scheduleDate, cost, message } = rideFound
-
+    const status = 'Pending';
     if (rideFound) {
-        const { seats, message } = req.body;  
-        const newRequest = new requestModel({ userId, rideId, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, time, scheduleDate, seats, cost, message, createdAt: today, updatedAt: today});
-
-        const ride = await newRequest.save();
-        return res.send( ride );
+        const { seats, message } = req.body;
+        const { carName, plateNumber, driverPhone, driverName, depature, destination, time, scheduleDate, price, description } = rideFound;
+        const availableSeats = rideFound.seats - parseInt(seats); // Reduce available ride seats wrt requestes seat(s) 
+        const cost = price * parseInt(seats); // Calculate the amount passenger pays wrt requested seat(s)
+        const driverId = rideFound.userId; // Get id of the driver that created the ride offer.
+        
+        const newRequest = new requestModel({ userId, rideId, driverId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, price, cost, message, status, createdAt: today, updatedAt: today});
+        
+        const request = await newRequest.save();
+        if (request) { 
+          await rideFound.set({ seats: availableSeats });
+          rideFound.save();
+          return res.send( { 
+            message: 'You\'ve successfully requested for this ride offer',
+            request
+            } );
+        }
     }
     return res.send('Ride not found');
+  } 
+  
+  /**
+   * @description Accept  request
+   * @method PUT
+   * @param {*} req
+   * @param {*} res
+   */
+  static async acceptRequest(req, res) { 
+    const userId = req.decoded.userId; // Get loggedIn userId
+    const requestId = req.params.requestId; // Get requestId passed in 
 
-  }
-
-  static async createComment(req, res) {
-    const postId = parseInt(req.params.postId);
-    const date = new Date().toDateString();
-    const postFound = await Post.findOne({
-      where: { id: postId }
-    });
-    if (postFound) {
-      const { visitorName, visitorEmail, content } = req.body;
-      await Comment.create({
-        postId, visitorName, visitorEmail, content, date
-      });
-      return res.send('Comment appended successfully!');
-    }
-    return res.send('Post not found, comment not appended');
   }
 }
 
-module.exports = ride;
-
-
+module.exports = request;

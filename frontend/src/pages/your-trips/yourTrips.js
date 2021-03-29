@@ -1,11 +1,16 @@
+import { connect } from "react-redux";
 import Table from "../../components/table/table.component";
 import "./yourTrips.style.css";
 
-const YourTrips = () => (
+const YourTrips = ({ userRides }) => (
   <div>
     <h2>YOUR TRIPS</h2>
-    <Table />
+    <Table rides={userRides} />
   </div>
 );
 
-export default YourTrips;
+const mapStateToProps = (state) => ({
+  userRides: state.rides.userRides,
+});
+
+export default connect(mapStateToProps)(YourTrips);

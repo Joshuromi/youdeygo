@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import jwt from "jwt-decode";
+import swal from "sweetalert";
 
 import api from "../../services/api";
 import FormInput from "../form-input/formInput.component";
@@ -32,13 +33,25 @@ class SignIn extends React.Component {
       if (token) {
         const { history } = this.props;
         const user = jwt(token);
+        user.token = token;
         this.props.setUser(user);
+        swal({
+          title: "Sign In Successful",
+          icon: "success",
+          button: "ok",
+        });
         history.push("/dashboard");
       } else {
         setTimeout(() => this.setState({ error: response.data.message }), 3000);
       }
     } catch (error) {
       console.log(error);
+      swal({
+        title: "Something Went Wrong",
+        text: "Please Try Again",
+        icon: "error",
+        button: "ok",
+      });
     }
   };
 

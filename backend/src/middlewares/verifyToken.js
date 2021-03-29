@@ -9,15 +9,15 @@ const verifyToken = (req, res, next) => {
     req.query.Authorization;
   if (typeof header !== "undefined") {
     try {
-      const token = header; // With React
-      //const token = header.split(' ')[1]; // Without React
+      // const token = header; // With React
+      const token = header.split(" ")[1]; // Without React
       req.decoded = jwt.verify(token, secret);
       next();
     } catch (error) {
-      return res.send('Auth failed');
+      return res.send("Auth failed");
     }
   } else {
-    return res.send('Token not provided');
+    return res.send("Token not provided");
   }
 };
 

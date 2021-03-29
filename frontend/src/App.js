@@ -7,6 +7,7 @@ import Header from "./components/header/header.component";
 import LandingPage from "./pages/landing/landingPage";
 import SignupAndSignin from "./pages/signup-and-signin/signupAndSignin";
 import Dashboard from "./pages/dashboard/dashboard";
+// import api from "./services/api";
 
 import "./App.css";
 
@@ -15,6 +16,11 @@ class App extends React.Component {
     super(props);
     this.state = {};
   }
+
+  // componentDidMount() {
+  //   const allrides = api.get("/rides");
+  // }
+
   render() {
     const {
       currentUser: { firstName, lastName },

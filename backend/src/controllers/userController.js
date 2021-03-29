@@ -2,6 +2,9 @@ const bcrypt = require("bcryptjs");
 const createToken = require("../helpers/createToken");
 const userModel = require("../models/userModel");
 const rideModel = require("../models/rideModel");
+const cloudinary = require('../services/cloudinary');
+const upload = require('../services/multer');
+const fs = require("fs");
 
 const saltRounds = 10;
 const options = {
@@ -28,7 +31,7 @@ class user {
       const createUser = new userModel({
         firstName,
         lastName,
-        email,
+        email: email.toLowerCase(),
         password: hash,
         enabled: true,
         verified: false,
@@ -52,7 +55,7 @@ class user {
    */
   static async login(req, res) {
     const { email, password } = req.body;
-    const userFound = await userModel.findOne({ email, enabled: true });
+    const userFound = await userModel.findOne({ email: email.toLowerCase(), enabled: true });
     if (userFound) {
       await bcrypt.compare(password, userFound.password, (error, result) => {
         if (result) {
@@ -78,13 +81,14 @@ class user {
   static async editProfile(req, res) {
     const userId = req.decoded.userId;
     const userFound = await userModel.findById(userId);
-
+    const { firstName, lastName, email, phoneNumber, address } = req.body;
     if (userFound) {
       userFound.set({
-        firstName: req.body.firstName || userFound.firstName,
-        lastName: req.body.lastName || userFound.lastName,
-        email: req.body.email || userFound.email,
-        phoneNumber: req.body.phoneNumber || userFound.phoneNumber,
+        firstName: firstName || userFound.firstName,
+        lastName: lastName || userFound.lastName,
+        email: email || userFound.email,
+        phoneNumber: phoneNumber || userFound.phoneNumber,
+        address: address || userFound.address,
         updatedAt: today,
       });
       userFound.save();
@@ -97,6 +101,49 @@ class user {
     return res.send('User not found');
 
   }
+  /**
+   * @description Upload profile picture
+   * @method PATCH
+   * @param {*} req
+   * @param {*} res
+   */
+  static async uploadProfilePicture (req, res) {
+    const userId = req.decoded.userId;
+    const userFound = await userModel.findById(userId);
+    await upload(req, res, async (error) => {
+      if (error) {
+        return res.status(400).json({
+          error,
+        });
+      }
+      const fileName = req.file.filename;
+      const filePath = `./uploads/${fileName}`;
+  
+      const uploadImage = await cloudinary.uploader.upload(
+        filePath,
+        function (error, result) {
+          //console.log(result, error);
+        }
+      );
+      fs.unlink(filePath, (result, error) => {
+        //console.log(result, error);
+      });
+      if (uploadImage) {
+        userFound.set({ 
+          profilePicture: uploadImage.secure_url,
+          updatedAt: today
+         });
+         userFound.save();
+      return res.send({
+        message: "Success",
+        data: uploadImage.secure_url
+      });
+      }
+
+    });
+  }
+
+
 
   /**
    * @description fetch all users from database
