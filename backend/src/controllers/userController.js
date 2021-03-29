@@ -81,13 +81,14 @@ class user {
   static async editProfile(req, res) {
     const userId = req.decoded.userId;
     const userFound = await userModel.findById(userId);
-
+    const { firstName, lastName, email, phoneNumber, address } = req.body;
     if (userFound) {
       userFound.set({
-        firstName: req.body.firstName || userFound.firstName,
-        lastName: req.body.lastName || userFound.lastName,
-        email: req.body.email || userFound.email,
-        phoneNumber: req.body.phoneNumber || userFound.phoneNumber,
+        firstName: firstName || userFound.firstName,
+        lastName: lastName || userFound.lastName,
+        email: email || userFound.email,
+        phoneNumber: phoneNumber || userFound.phoneNumber,
+        address: address || userFound.address,
         updatedAt: today,
       });
       userFound.save();
@@ -116,7 +117,6 @@ class user {
         });
       }
       const fileName = req.file.filename;
-  
       const filePath = `./uploads/${fileName}`;
   
       const uploadImage = await cloudinary.uploader.upload(
@@ -125,7 +125,6 @@ class user {
           //console.log(result, error);
         }
       );
-  
       fs.unlink(filePath, (result, error) => {
         //console.log(result, error);
       });
@@ -140,6 +139,7 @@ class user {
         data: uploadImage.secure_url
       });
       }
+
     });
   }
 

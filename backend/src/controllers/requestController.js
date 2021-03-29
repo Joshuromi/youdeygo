@@ -6,9 +6,9 @@ const requestModel = require('../models/requestModel')
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 const today = new Date().toLocaleDateString('en-US', options);
 
-class ride {
+class request {
   /**
-   * @description Create  ride
+   * @description Create  request
    * @method POST
    * @param {*} req
    * @param {*} res
@@ -47,4 +47,4 @@ class ride {
   } 
 }
 
-module.exports = ride;
+module.exports = request;

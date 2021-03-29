@@ -11,7 +11,7 @@ class validations {
      */
     static async validateRideCreation(body, userId) { 
      const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost } = body 
-    const duplicateTime = await rideModel.findOne({time, userId})
+    const duplicateTime = await rideModel.findOne({time, userId, scheduleDate})
     const createRideErrors = {};
 
     if (!carName) {
@@ -46,7 +46,7 @@ class validations {
         createRideErrors.message = 'Time is required in a valid format (E.g 7:00 am)';
       }
 
-    if (duplicateTime !== null && duplicateTime.seats > 0 ) {
+    if (duplicateTime !== null && duplicateTime.seats > 0) {
     createRideErrors.message = 'You already have available ride at this same time';
     }
     
