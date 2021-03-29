@@ -19,10 +19,10 @@ class ride {
     const driverName = `${userFound.firstName} ${userFound.lastName}`;
     const driverPhone = userFound.phoneNumber;
 
-    const { carName, plateNumber, depature, destination, time, scheduleDate, seats, cost, description } = req.body
+    const { carName, plateNumber, depature, destination, time, scheduleDate, seats, price, description } = req.body
 
     const newRide = new rideModel({ userId, driverName, driverPhone, carName, plateNumber, driverPhone, depature,
-      destination, time, scheduleDate, seats, cost, description, createdAt: today, updatedAt: today});
+      destination, time, scheduleDate, seats: parseInt(seats), price: parseInt(price), description, createdAt: today, updatedAt: today});
 
     const ride = await newRide.save();
     return res.send({
@@ -58,7 +58,6 @@ class ride {
       const request = await requestModel.find({rideId: rideFound.id});
       const requestsMade = request.length > 0 ? request : 'No request for this ride yet!'
       return res.send({
-        message: 'Success',
         rideFound,
         requestsMade,
       });
@@ -102,7 +101,7 @@ class ride {
       });
     }
 
-    return res.send('Ride not found!') ;
+    return res.send('Ride not found!');
   }
 }
 

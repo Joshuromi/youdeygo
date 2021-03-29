@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const requestSchema = new mongoose.Schema({
     rideId: String,
     userId: String,
+    driverId: String,
     driverName: String,
     passengerName: String,
     driverPhone: String,

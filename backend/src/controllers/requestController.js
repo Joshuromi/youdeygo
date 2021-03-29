@@ -25,13 +25,14 @@ class request {
     const passengerPhone = userFound.phoneNumber;
     const status = 'Pending';
     if (rideFound) {
-        const { seats, message } = req.body;  
+        const { seats, message } = req.body;
         const { carName, plateNumber, driverPhone, driverName, depature, destination, time, scheduleDate, price, description } = rideFound;
-        const availableSeats = rideFound.seats - seats; // Reduce available ride seats wrt requestes seat(s) 
-        const cost = rideFound.price * seats; // Calculate the amount passenger pays wrt requested seat(s)
-
-        const newRequest = new requestModel({ userId, rideId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, price, cost, message, status, createdAt: today, updatedAt: today});
-
+        const availableSeats = rideFound.seats - parseInt(seats); // Reduce available ride seats wrt requestes seat(s) 
+        const cost = price * parseInt(seats); // Calculate the amount passenger pays wrt requested seat(s)
+        const driverId = rideFound.userId; // Get id of the driver that created the ride offer.
+        
+        const newRequest = new requestModel({ userId, rideId, driverId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, price, cost, message, status, createdAt: today, updatedAt: today});
+        
         const request = await newRequest.save();
         if (request) { 
           await rideFound.set({ seats: availableSeats });
@@ -54,7 +55,7 @@ class request {
   static async acceptRequest(req, res) { 
     const userId = req.decoded.userId; // Get loggedIn userId
     const requestId = req.params.requestId; // Get requestId passed in 
-    
+
   }
 }
 
