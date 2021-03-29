@@ -43,8 +43,19 @@ class request {
         }
     }
     return res.send('Ride not found');
-
   } 
+  
+  /**
+   * @description Accept  request
+   * @method PUT
+   * @param {*} req
+   * @param {*} res
+   */
+  static async acceptRequest(req, res) { 
+    const userId = req.decoded.userId; // Get loggedIn userId
+    const requestId = req.params.requestId; // Get requestId passed in 
+    
+  }
 }
 
 module.exports = request;

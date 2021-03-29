@@ -26,8 +26,9 @@ app.delete('/delete/:userId', verifyToken, isUserAdmin, user.deleteUser);
 // Ride Routes
 app.get('/rides', ride.getAllRides);
 app.get('/rides/:rideId', ride.getSingleRide);
+app.get('/myrides', verifyToken, isUserValid, ride.myRIdes);
+app.get('/myrides/:rideId', verifyToken, isUserValid, ride.mySingleRIde);
 app.post('/rides', verifyToken, isUserValid, validateCreateRide, ride.create);
-
 
 // Request Routes
 app.post('/requests/:rideId', verifyToken, isUserValid, validateCreateRequest, request.create);

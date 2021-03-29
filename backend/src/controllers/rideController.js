@@ -65,9 +65,45 @@ class ride {
     }
 
     return res.send('Ride not found!') ;
-
   }
-  
+
+  /**
+   * @description View all of my rides offers
+   * @method myPosts
+   * @param {*} req
+   * @param {*} res
+   */
+  static async myRIdes(req, res) {
+    const userId = req.decoded.userId;
+    const ridesFound = await rideModel.find({userId});
+    if (ridesFound.length > 0) {
+      return res.send(ridesFound);
+    }
+    return res.send('Sorry!, you haven\'t provided any ride offer yet . Try to provide one');
+  }
+
+  /**
+   * @description fetch my single ride offer along side with request(s)
+   * @method GET/:rideId
+   * @param {*} req
+   * @param {*} res
+   */
+  static async mySingleRIde(req, res) {
+    const rideId = req.params.rideId;
+    const userId  = req.decoded.userId;
+
+    const rideFound = await rideModel.find({_id: rideId, userId});
+    if (rideFound) {
+      const request = await requestModel.find({rideId: rideFound.id});
+      const requestsMade = request.length > 0 ? request : 'No request for this ride yet!'
+      return res.send({
+        rideFound,
+        requestsMade,
+      });
+    }
+
+    return res.send('Ride not found!') ;
+  }
 }
 
 module.exports = ride;
