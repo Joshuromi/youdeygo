@@ -73,6 +73,12 @@ class SignUp extends React.Component {
       }
     } catch (error) {
       console.log(error);
+      swal({
+        title: "Something Went Wrong",
+        text: "Please Try Again",
+        icon: "error",
+        button: "ok",
+      });
     }
   };
 
