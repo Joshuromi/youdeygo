@@ -1,4 +1,3 @@
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../../assests/logo.png";
 import "./header.style.css";
@@ -8,11 +7,7 @@ const toogle = () => {
   nav.classList.toggle("none");
 };
 
-const signOut = () => {
-  localStorage.setItem("token", "");
-};
-
-const Header = ({ currentUser: { firstName } }) => (
+const Header = ({ firstName, removeUser }) => (
   <div className="header">
     <div className="logo-div">
       <Link to="/">
@@ -31,7 +26,7 @@ const Header = ({ currentUser: { firstName } }) => (
       </Link>
       <Link to="/signin">
         {firstName ? (
-          <div className="signin" onClick={signOut}>
+          <div className="signin" onClick={removeUser}>
             Sign out
           </div>
         ) : (
@@ -51,8 +46,4 @@ const Header = ({ currentUser: { firstName } }) => (
   </div>
 );
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

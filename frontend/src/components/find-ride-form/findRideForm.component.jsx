@@ -1,9 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import CustomButton from "../buttons/customButton.component";
 import FormInput from "../form-input/formInput.component";
-import "./form.style.css";
+import "./findRideForm.style.css";
 
-class Form extends React.Component {
+class FindRideForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +26,7 @@ class Form extends React.Component {
   };
 
   render() {
+    const { firstName } = this.props.currentUser;
     return (
       <form className="form" onSubmit={this.handleSubmit}>
         <div className="form-inputs">
@@ -50,11 +53,17 @@ class Form extends React.Component {
         </div>
         <div className="form-buttons">
           <CustomButton>Find a Ride</CustomButton>
-          <CustomButton>Post a Trip</CustomButton>
+          <Link to={firstName ? "/dashboard/post" : "/signin"}>
+            <CustomButton>Post a Trip</CustomButton>
+          </Link>
         </div>
       </form>
     );
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(FindRideForm);

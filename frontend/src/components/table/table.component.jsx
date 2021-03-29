@@ -1,48 +1,50 @@
-import React from "react";
 import "./table.style.css";
 
-class Table extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      infos: [],
-    };
-  }
+// driverName: String,
+//   driverPhone: String,
+//   carName: String,
+//   plateNumber: String,
+//   depature: String,
+//   destination: String,
+//   time: String,
+//   scheduleDate: String,
+//   seats: Number,
+//   cost: Number,
+//   description: String,
+//   createdAt: String,
+//   updatedAt: String,
 
-  componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => this.setState({ infos: json }));
-  }
-
-  render() {
-    const { infos } = this.state;
-    return (
-      <table>
-        <caption>Trips</caption>
-        <thead>
-          <tr>
-            <th scope="col">From</th>
-            <th scope="col">To</th>
-            <th scope="col">Amount(₦)</th>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {infos.map((info) => (
-            <tr key={info.id}>
-              <td data-label="From">{info.address.street}</td>
-              <td data-label="To">{info.address.city}</td>
-              <td data-label="Amount(₦)">1,190</td>
-              <td data-label="Date">03/01/2016</td>
-              <td data-label="Time">Time</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  }
-}
+const Table = ({ rides }) => (
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Car Name</th>
+        <th scope="col">Plate NO.</th>
+        <th scope="col">Seats</th>
+        <th scope="col">From</th>
+        <th scope="col">To</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Amount (₦)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rides.map((ride) => (
+        <tr key={ride._id}>
+          <td data-label="Name">{ride.driverName}</td>
+          <td data-label="Car Name">{ride.carName}</td>
+          <td data-label="Plate NO.">{ride.plateNumber}</td>
+          <td data-label="Seats">{ride.seats}</td>
+          <td data-label="From">{ride.depature}</td>
+          <td data-label="To">{ride.destination}</td>
+          <td data-label="Date">{ride.scheduleDate}</td>
+          <td data-label="Time">{ride.time}</td>
+          <td data-label="Amount(₦)">{ride.cost}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
 
 export default Table;

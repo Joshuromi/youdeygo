@@ -2,6 +2,7 @@ import React from "react";
 import jwt from "jwt-decode";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import swal from "sweetalert";
 
 import FormInput from "../form-input/formInput.component";
 import CustomButton from "../buttons/customButton.component";
@@ -59,13 +60,25 @@ class SignUp extends React.Component {
       if (token) {
         const { history } = this.props;
         const user = jwt(token);
+        user.token = token;
         this.props.setUser(user);
+        swal({
+          title: "Sign Up Successful",
+          icon: "success",
+          button: "ok",
+        });
         history.push("/dashboard");
       } else {
         setTimeout(() => this.setState({ error: response.data.message }), 3000);
       }
     } catch (error) {
       console.log(error);
+      swal({
+        title: "Something Went Wrong",
+        text: "Please Try Again",
+        icon: "error",
+        button: "ok",
+      });
     }
   };
 
