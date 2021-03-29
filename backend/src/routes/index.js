@@ -6,7 +6,7 @@ const  verifyToken = require('../middlewares/verifyToken');
 const  {isUserValid, isUserAdmin }  = require('../middlewares/checkAuth') ;
 const { validateSignup, validateSignin, validateEdit } = require('../middlewares/userCredentials');
 const { validateCreateRide } = require('../middlewares/rideCredentials');
-const { validateCreateRequest } = require('../middlewares/requestCredentials');
+const { validateCreateRequest, checkRideOwner } = require('../middlewares/requestCredentials');
 
 const app = express.Router();  
 
@@ -32,5 +32,6 @@ app.post('/rides', verifyToken, isUserValid, validateCreateRide, ride.create);
 
 // Request Routes
 app.post('/requests/:rideId', verifyToken, isUserValid, validateCreateRequest, request.create);
+app.patch('/requests/:rideId/accept', verifyToken, isUserValid, checkRideOwner, request.acceptRequest )
 
 module.exports = app;

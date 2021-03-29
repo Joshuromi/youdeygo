@@ -32,7 +32,7 @@ class request {
         const driverId = rideFound.userId; // Get id of the driver that created the ride offer.
         
         const newRequest = new requestModel({ userId, rideId, driverId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, price, cost, message, status, createdAt: today, updatedAt: today});
-        
+
         const request = await newRequest.save();
         if (request) { 
           await rideFound.set({ seats: availableSeats });
@@ -54,8 +54,14 @@ class request {
    */
   static async acceptRequest(req, res) { 
     const userId = req.decoded.userId; // Get loggedIn userId
-    const requestId = req.params.requestId; // Get requestId passed in 
-
+    const requestId = req.params.requestId; // Get requestId passed in
+    const requestFound = await requestModel.findById(requestId);
+    if (requestFound) {
+      requestFound.set({ status: 'Accepted' });
+      requestFound.save();
+      res.send('Request Accepted, Enjoy your ride soon!')
+    }
+    res.send('Request not found');
   }
 }
 
