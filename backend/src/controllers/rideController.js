@@ -55,7 +55,7 @@ class ride {
     const rideId = req.params.rideId;
     const rideFound = await rideModel.findById(rideId);
     if (rideFound) {
-      const request = await requestModel.find({rideId: rideFound.id});
+      const request = await requestModel.find({rideId});
       const requestsMade = request.length > 0 ? request : 'No request for this ride yet!'
       return res.send({
         rideFound,
@@ -92,8 +92,8 @@ class ride {
     const userId  = req.decoded.userId;
 
     const rideFound = await rideModel.find({_id: rideId, userId});
-    if (rideFound) {
-      const request = await requestModel.find({rideId: rideFound.id});
+    if (rideFound) { 
+      const request = await requestModel.find({ rideId });
       const requestsMade = request.length > 0 ? request : 'No request for this ride yet!'
       return res.send({
         rideFound,

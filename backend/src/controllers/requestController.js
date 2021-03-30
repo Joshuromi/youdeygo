@@ -53,16 +53,14 @@ class request {
    * @param {*} res
    */
   static async acceptRequest(req, res) { 
-    const userId = req.decoded.userId; // Get loggedIn userId
-    const requestId = req.params.requestId; // Get requestId passed in
+    const requestId = req.params.requestId; // Get requestId passed in 
     const requestFound = await requestModel.findById(requestId);
-    if (requestFound) {
+    if (requestFound) {  
       requestFound.set({ status: 'Accepted' });
       requestFound.save();
-      res.send('Request Accepted, Enjoy your ride soon!')
+     return res.send('Request Accepted, Enjoy your ride soon!')
     }
-    res.send('Request not found');
+   return res.send('Request not found');
   }
-}
-
+} 
 module.exports = request;
