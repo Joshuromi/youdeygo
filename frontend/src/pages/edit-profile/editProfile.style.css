@@ -1,0 +1,21 @@
+.edit-profile {
+  display: flex;
+  justify-content: center;
+}
+
+.user-info {
+  width: 50%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.profile-pics {
+  width: 80%;
+  margin: auto;
+}
+
+.profile-pics img {
+  width: 100%;
+  border-radius: 50%;
+}

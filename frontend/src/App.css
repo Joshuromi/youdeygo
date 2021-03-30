@@ -19,3 +19,11 @@ label {
   font-size: 15px;
   color: #555;
 }
+
+html {
+  background-color: rgba(221, 221, 221, 0.5);
+  background-image: url("./assests/bg.svg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+}
