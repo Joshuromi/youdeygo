@@ -32,6 +32,7 @@ app.post('/rides', verifyToken, isUserValid, validateCreateRide, ride.create);
 
 // Request Routes
 app.post('/requests/:rideId', verifyToken, isUserValid, validateCreateRequest, request.create);
-app.patch('/accept/:requestId', verifyToken, isUserValid, checkRideOwner, request.acceptRequest )
+app.patch('/accept/:requestId', verifyToken, isUserValid, checkRideOwner, request.acceptRequest );
+app.patch('/decline/:requestId', verifyToken, isUserValid, checkRideOwner, request.declineRequest);
 
 module.exports = app;

@@ -11,7 +11,7 @@ exports.validateCreateRequest = async (req, res, next) => {
 };
 exports.checkRideOwner = async (req, res, next) => {
   const userId = req.decoded.userId;
-  const requestId = req.params.rideId;
+  const requestId = req.params.requestId;
   const errors = await validation.getRideOwner(requestId, userId);
   if (Object.keys(errors).length > 0) {
     return res.send(errors);
