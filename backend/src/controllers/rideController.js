@@ -47,7 +47,7 @@ class ride {
 
   /**
    * @description fetch a single user from database
-   * @method GET/:userId
+   * @method GET/:rideId
    * @param {*} req
    * @param {*} res
    */
@@ -66,6 +66,25 @@ class ride {
     return res.send('Ride not found!') ;
   }
 
+  /** 
+   * @description Search ride
+   * @method GET?depature & destination
+   * @param {*} req.query
+   * @response {*} rides
+   */
+  static async searchRides(req, res) {
+    const { depature, destination } = req.query;
+    const rideFound = await rideModel.find()
+    .or([ { depature: { $in: [depature, destination] } }, 
+      { destination: { $in: [depature, destination] } }])
+    .and({seats: {$ne: 0}});
+    /* { depature, destination, seats: { $ne: 0 } } */
+    if (rideFound.length > 0) { 
+      return res.send(rideFound);
+    }
+    return res.send('Ride not found!') ;
+
+  } 
   /**
    * @description View all of my rides offers
    * @method myPosts
