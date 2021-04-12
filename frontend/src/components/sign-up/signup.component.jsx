@@ -69,7 +69,9 @@ class SignUp extends React.Component {
         });
         history.push("/dashboard");
       } else {
-        setTimeout(() => this.setState({ error: response.data.message }), 3000);
+        this.setState({ error: response.data });
+        setTimeout(() => this.setState({ error: "" }), 3000);
+        return;
       }
     } catch (error) {
       console.log(error);

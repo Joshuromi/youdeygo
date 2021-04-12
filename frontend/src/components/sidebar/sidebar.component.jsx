@@ -12,7 +12,9 @@ const Sidebar = ({ displayName }) => (
   <div className="sidebar">
     <div className="profile-img">
       <img src={Pp} alt="profile" />
-      <p>{displayName}</p>
+      <Link to="/dashboard/editprofile">
+        <p>{displayName}</p>
+      </Link>
     </div>
     <div className="tabs">
       <Link to="/dashboard">

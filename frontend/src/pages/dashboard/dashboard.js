@@ -6,6 +6,7 @@ import YourTrips from "../your-trips/yourTrips";
 import FindRide from "../find-ride/findRide";
 import PostRide from "../post-ride/postRide";
 import AllTrips from "../all-trips/allTrips";
+import EditProfile from "../edit-profile/editProfile";
 
 import "./dashboard.style.css";
 
@@ -20,6 +21,7 @@ const Dashboard = ({ firstName, lastName }) => (
           <Route path="/dashboard/find" component={FindRide} />
           <Route path="/dashboard/post" component={PostRide} />
           <Route path="/dashboard/alltrips" component={AllTrips} />
+          <Route path="/dashboard/editprofile" component={EditProfile} />
         </Switch>
       </div>
     </div>
