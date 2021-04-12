@@ -32,7 +32,7 @@ class request {
         const driverId = rideFound.userId; // Get id of the driver that created the ride offer.
         
         const newRequest = new requestModel({ userId, rideId, driverId, driverName, passengerName, passengerPhone, carName, plateNumber, driverPhone, depature, destination, description, time, scheduleDate, seats, price, cost, message, status, createdAt: today, updatedAt: today});
-        
+
         const request = await newRequest.save();
         if (request) { 
           await rideFound.set({ seats: availableSeats });
@@ -53,10 +53,35 @@ class request {
    * @param {*} res
    */
   static async acceptRequest(req, res) { 
-    const userId = req.decoded.userId; // Get loggedIn userId
     const requestId = req.params.requestId; // Get requestId passed in 
-
+    const requestFound = await requestModel.findById(requestId);
+    if (requestFound) {
+      requestFound.set({ status: 'Accepted' });
+      requestFound.save();
+      return res.send('Request Accepted, meet your passenger soon!')
+    }
+   return res.send('Request not found');
   }
-}
-
+  
+  /**
+   * @description Decline  request
+   * @method PUT
+   * @param {*} req
+   * @param {*} res
+   */
+  static async declineRequest(req, res) { 
+    const requestId = req.params.requestId; // Get requestId passed in 
+    const requestFound = await requestModel.findById(requestId);
+    if (requestFound) {  
+      const retrieveRide = await rideModel.findOne({_id: requestFound.rideId});
+      const availableSeats = requestFound.seats + retrieveRide.seats;
+      retrieveRide.set({seats: availableSeats}); 
+      requestFound.set({ status: 'Declined' });
+      requestFound.save();
+      retrieveRide.save()
+     return res.send('Request Declined!')
+    }
+   return res.send('Request not found');
+  }
+} 
 module.exports = request;

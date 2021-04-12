@@ -1,0 +1,257 @@
+tags:
+- name: rides
+  description: Everything about your rides
+paths:
+  "/rides":
+    get:
+      tags:
+      - rides
+      summary: View all rides
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      responses:
+        '200':
+          description: All rides
+    
+  "/rides/{id}":
+    get:
+      tags:
+      - rides
+      summary: Find rides by ID
+      description: Returns a single rides
+      operationId: getPetById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        description: ID of rides to return
+        required: true
+        type: string
+      responses:
+        '200':
+          description: successful operation 
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: rides not found
+      security:
+      - api_key: []
+      
+  '':
+    post:
+      tags:
+      - rides
+      summary: Create a rides in the store with form data
+      operationId: updatePetWithForm
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - application/xml
+      parameters: 
+      - name: name
+        in: formData
+        description:  name of the rides
+        required: true
+        type: string
+      - name: subscribedToChannel
+        in: formData
+        description: channel subscribed to
+        required: true
+        type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+      - petstore_auth:
+        - write:pets
+        - read:pets
+
+                    # path of the user from your endpoint
+    patch:          # endpoint request type (put request)
+      tags:
+        - rides
+      summary: It updates a pet profile detail
+      produces:
+      - application/json
+      parameters:
+      - name: name
+        in: formData
+        description:  name of the rides
+        required: true
+        type: string
+      - name: subscribedToChannel
+        in: formData
+        description: channel subscribed to
+        required: true
+        type: string
+      responses:
+        200:
+          description: An object with a user updated user profile detail
+        401:
+          description: Unauthorized users
+    
+    delete:
+      tags:
+      - rides
+      summary: Deletes a pet
+      operationId: deletePet
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: petId
+        in: path
+        description: Pet id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+      security:
+      - petstore_auth:
+        - write:pets
+        - read:pets
+  "/pet/{petId}/uploadImage":
+    post:
+      tags:
+      - rides
+      summary: uploads an image
+      operationId: uploadFile
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: petId
+        in: path
+        description: ID of pet to update
+        required: true
+        type: integer
+        format: int64
+      - name: additionalMetadata
+        in: formData
+        description: Additional data to pass to server
+        required: false
+        type: string
+      - name: file
+        in: formData
+        description: file to upload
+        required: false
+        type: file
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            "$ref": "#/definitions/ApiResponse"
+      security:
+      - petstore_auth:
+        - write:pets
+        - read:pets
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: http://petstore.swagger.io/oauth/dialog
+    flow: implicit
+    scopes:
+      write:pets: modify pets in your account
+      read:pets: read your pets
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  Order:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      petId:
+        type: integer
+        format: int64
+      quantity:
+        type: integer
+        format: int32
+      shipDate:
+        type: string
+        format: date-time
+      status:
+        type: string
+        description: Order Status
+        enum:
+        - placed
+        - approved
+        - delivered
+      complete:
+        type: boolean
+        default: false
+    xml:
+      name: Order
+  Category:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+    xml:
+      name: Category
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      userStatus:
+        type: integer
+        format: int32
+        description: User Status
+    xml:
+      name: User
+  Tag:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+    xml:
+      name: Tag
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string

@@ -1,4 +1,5 @@
 const rideModel = require('../models/rideModel');
+const requestModel = require('../models/requestModel');
 const  { validNumber } = require('./regEx') ; 
 const getRide = (rideId) =>  rideModel.findOne({ _id: rideId })
 
@@ -10,7 +11,7 @@ class validations {
      * @param {object} body
      * @returns {Array} createRequestErrors
      */
-    static async validateRideCreation(body, rideId, userId) { 
+    static async validateRequestCreation(body, rideId, userId) { 
      const { seats } = body 
     const createRequestErrors = {};
     const selectedRide = await getRide(rideId);
@@ -27,6 +28,20 @@ class validations {
     
       return createRequestErrors;
     }
+      /**
+     * @description validate ride details
+     * @function getRideOwner
+     * @param {object} id
+     * @returns {Array} getRideOwnertErrors
+     */
+       static async getRideOwner(requestId, userId) {  
+        const selectRequest = await requestModel.findById(requestId)
+       const getRideOwnertErrors = {}; 
+       if (selectRequest !== null && selectRequest.driverId !== userId) {
+        getRideOwnertErrors.message = 'Sorry!, this request is not for a ride you offered';
+       }   
+         return getRideOwnertErrors;
+       }
 
 }
 
