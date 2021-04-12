@@ -6,8 +6,8 @@ const { validateCreateRequest, checkRideOwner } = require('../middlewares/reques
 
 const router = express.Router();
 
-router.post('/requests/:rideId', verifyToken, isUserValid, validateCreateRequest, request.create);
-router.patch('/accept/:requestId', verifyToken, isUserValid, checkRideOwner, request.acceptRequest );
-router.patch('/decline/:requestId', verifyToken, isUserValid, checkRideOwner, request.declineRequest);
+router.post('/requests/:rideId', [verifyToken, isUserValid, validateCreateRequest], request.create);
+router.patch('/accept/:requestId', [verifyToken, isUserValid, checkRideOwner], request.acceptRequest );
+router.patch('/decline/:requestId', [verifyToken, isUserValid, checkRideOwner], request.declineRequest);
 
 module.exports = router;
