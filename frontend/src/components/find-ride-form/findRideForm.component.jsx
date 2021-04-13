@@ -1,8 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
 import CustomButton from "../buttons/customButton.component";
 import FormInput from "../form-input/formInput.component";
+import Table from "../table/table.component";
+import api from "../../services/api";
 import "./findRideForm.style.css";
 
 class FindRideForm extends React.Component {
@@ -11,13 +14,28 @@ class FindRideForm extends React.Component {
     this.state = {
       from: "",
       to: "",
-      date: "",
+      rides: [],
+      show: false,
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(this.state);
+    const { from, to } = this.state;
+    try {
+      const response = await api.get(`/searchrides/?depature=${from}&destination=${to}`);
+      if (Array.isArray(response.data)) {
+        this.setState({ rides: response.data, show: true });
+      } else {
+        swal({
+          title: response.data,
+          icon: "error",
+          button: "ok",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   handleChange = (event) => {
@@ -25,8 +43,13 @@ class FindRideForm extends React.Component {
     this.setState({ [name]: value });
   };
 
+  closeRides = () => {
+    this.setState({ show: false });
+  }
+
   render() {
     const { firstName } = this.props.currentUser;
+    const { from, to, show, rides } = this.state;
     return (
       <form className="form" onSubmit={this.handleSubmit}>
         <div className="form-inputs">
@@ -34,20 +57,14 @@ class FindRideForm extends React.Component {
             type="text"
             name="from"
             label="From"
-            value={this.state.from}
+            value={from}
             handleChange={this.handleChange}
           />
           <FormInput
             type="text"
             name="to"
             label="To"
-            value={this.state.to}
-            handleChange={this.handleChange}
-          />
-          <FormInput
-            type="date"
-            name="date"
-            value={this.state.date}
+            value={to}
             handleChange={this.handleChange}
           />
         </div>
@@ -57,6 +74,12 @@ class FindRideForm extends React.Component {
             <CustomButton>Post a Trip</CustomButton>
           </Link>
         </div>
+        {
+          show === true ? <div className="search-result">
+            <i className="fas fa-window-close close" onClick={this.closeRides}></i>
+            <Table rides={rides} />
+          </div> : null
+        }
       </form>
     );
   }

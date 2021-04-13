@@ -13,7 +13,7 @@ class ride {
    * @param {*} req
    * @param {*} res
    */
-  static async create(req, res) { 
+  static async create(req, res) {
     const userId = req.decoded.userId; // Get loggedIn userId
     const userFound = await userModel.findById(userId); // Fetch loggedIn user
     const driverName = `${userFound.firstName} ${userFound.lastName}`;
@@ -21,13 +21,15 @@ class ride {
 
     const { carName, plateNumber, depature, destination, time, scheduleDate, seats, price, description } = req.body
 
-    const newRide = new rideModel({ userId, driverName, driverPhone, carName, plateNumber, driverPhone, depature,
-      destination, time, scheduleDate, seats: parseInt(seats), price: parseInt(price), description, createdAt: today, updatedAt: today});
+    const newRide = new rideModel({
+      userId, driverName, driverPhone, carName, plateNumber, driverPhone, depature,
+      destination, time, scheduleDate, seats: parseInt(seats), price: parseInt(price), description, createdAt: today, updatedAt: today
+    });
 
     const ride = await newRide.save();
     return res.send({
       message: 'Ride created successfully!',
-        ride
+      ride
     });
   }
 
@@ -55,7 +57,7 @@ class ride {
     const rideId = req.params.rideId;
     const rideFound = await rideModel.findById(rideId);
     if (rideFound) {
-      const request = await requestModel.find({rideId});
+      const request = await requestModel.find({ rideId });
       const requestsMade = request.length > 0 ? request : 'No request for this ride yet!'
       return res.send({
         rideFound,
@@ -63,7 +65,7 @@ class ride {
       });
     }
 
-    return res.send('Ride not found!') ;
+    return res.send('Ride not found!');
   }
 
   /** 
@@ -75,16 +77,16 @@ class ride {
   static async searchRides(req, res) {
     const { depature, destination } = req.query;
     const rideFound = await rideModel.find()
-    .or([ { depature: { $in: [depature, destination] } }, 
+      .or([{ depature: { $in: [depature, destination] } },
       { destination: { $in: [depature, destination] } }])
-    .and({seats: {$ne: 0}});
+      .and({ seats: { $ne: 0 } });
     /* { depature, destination, seats: { $ne: 0 } } */
-    if (rideFound.length > 0) { 
+    if (rideFound.length > 0) {
       return res.send(rideFound);
     }
-    return res.send('Ride not found!') ;
+    return res.send('Ride not found!');
 
-  } 
+  }
   /**
    * @description View all of my rides offers
    * @method myPosts
@@ -93,7 +95,7 @@ class ride {
    */
   static async myRIdes(req, res) {
     const userId = req.decoded.userId;
-    const ridesFound = await rideModel.find({userId});
+    const ridesFound = await rideModel.find({ userId });
     if (ridesFound.length > 0) {
       return res.send(ridesFound);
     }
@@ -108,10 +110,10 @@ class ride {
    */
   static async mySingleRIde(req, res) {
     const rideId = req.params.rideId;
-    const userId  = req.decoded.userId;
+    const userId = req.decoded.userId;
 
-    const rideFound = await rideModel.find({_id: rideId, userId});
-    if (rideFound) { 
+    const rideFound = await rideModel.find({ _id: rideId, userId });
+    if (rideFound) {
       const request = await requestModel.find({ rideId });
       const requestsMade = request.length > 0 ? request : 'No request for this ride yet!'
       return res.send({
