@@ -27,3 +27,8 @@ html {
   background-repeat: no-repeat;
   background-blend-mode: multiply;
 }
+
+i {
+  color: #333;
+  margin-right: 10px;
+}

@@ -1,13 +1,15 @@
 .edit-profile {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .user-info {
-  width: 50%;
+  width: 60%;
   max-width: 500px;
   padding: 20px;
   background-color: #fff;
+  margin-right: 5px;
 }
 
 .profile-pics {
@@ -18,4 +20,43 @@
 .profile-pics img {
   width: 100%;
   border-radius: 50%;
+}
+
+.edit-form {
+  background-color: #fff;
+  padding: 20px;
+  width: 40%;
+  max-width: 500px;
+}
+
+.edit {
+  padding: 10px 15px;
+  width: 120px;
+  cursor: pointer;
+  background-color: #488eff;
+  color: #fff;
+  margin: auto;
+}
+
+.edit:hover {
+  background-color: #3669bb;
+  opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+  .edit-profile {
+    flex-direction: column;
+  }
+
+  .user-info {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .edit-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
 }

@@ -17,10 +17,6 @@ class App extends React.Component {
     this.state = {};
   }
 
-  // componentDidMount() {
-  //   const allrides = api.get("/rides");
-  // }
-
   render() {
     const {
       currentUser: { firstName, lastName },
@@ -43,8 +39,8 @@ class App extends React.Component {
               !firstName ? (
                 <Redirect to="/signin" />
               ) : (
-                <Dashboard firstName={firstName} lastName={lastName} />
-              )
+                  <Dashboard firstName={firstName} lastName={lastName} />
+                )
             }
           />
         </Switch>

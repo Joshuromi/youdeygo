@@ -8,7 +8,7 @@
 .profile-img {
   width: 100%;
   height: 150px;
-  padding: 30px;
+  padding: 20px 0;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   background-color: #488eff;
@@ -17,11 +17,16 @@
 }
 
 .profile-img img {
-  width: 100%;
+  width: 60%;
   border-radius: 50%;
 }
 
 .profile-img p {
+  margin-top: 5px;
+  color: #fff;
+}
+
+.sidebar i {
   color: #fff;
 }
 

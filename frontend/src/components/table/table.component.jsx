@@ -1,19 +1,5 @@
 import "./table.style.css";
 
-// driverName: String,
-//   driverPhone: String,
-//   carName: String,
-//   plateNumber: String,
-//   depature: String,
-//   destination: String,
-//   time: String,
-//   scheduleDate: String,
-//   seats: Number,
-//   cost: Number,
-//   description: String,
-//   createdAt: String,
-//   updatedAt: String,
-
 const Table = ({ rides }) => (
   <table>
     <thead>
@@ -40,7 +26,7 @@ const Table = ({ rides }) => (
           <td data-label="To">{ride.destination}</td>
           <td data-label="Date">{ride.scheduleDate}</td>
           <td data-label="Time">{ride.time}</td>
-          <td data-label="Amount(₦)">{ride.cost}</td>
+          <td data-label="Amount(₦)">{ride.price}</td>
         </tr>
       ))}
     </tbody>

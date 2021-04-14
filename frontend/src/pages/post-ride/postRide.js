@@ -18,7 +18,7 @@ class PostRide extends React.Component {
       seats: "",
       depature: "",
       destination: "",
-      cost: "",
+      price: "",
       scheduleDate: "",
       time: "",
       description: "",
@@ -81,7 +81,7 @@ class PostRide extends React.Component {
       time,
       scheduleDate,
       seats,
-      cost,
+      price,
       description,
     } = this.state;
     return (
@@ -126,8 +126,8 @@ class PostRide extends React.Component {
             />
             <FormInput
               type="number"
-              name="cost"
-              value={cost}
+              name="price"
+              value={price}
               label="Amount(₦)"
               handleChange={this.handleChange}
             />
