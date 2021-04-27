@@ -9,8 +9,8 @@ const router = express.Router();
 router.get('/rides', ride.getAllRides);
 router.get('/rides/:rideId', ride.getSingleRide);
 router.get('/searchrides', ride.searchRides)
-router.get('/myrides', verifyToken, isUserValid, ride.myRIdes);
-router.get('/myrides/:rideId', verifyToken, isUserValid, ride.mySingleRIde);
-router.post('/rides', verifyToken, isUserValid, validateCreateRide, ride.create);
+router.get('/myrides', [verifyToken, isUserValid], ride.myRIdes);
+router.get('/myrides/:rideId',[ verifyToken, isUserValid], ride.mySingleRIde);
+router.post('/rides', [verifyToken, isUserValid, validateCreateRide], ride.create);
 
 module.exports = router;

@@ -40,8 +40,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: rides not found
-      security:
-      - api_key: []
       
   '':
     post:
