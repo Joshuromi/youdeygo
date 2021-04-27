@@ -1,6 +1,6 @@
 .custom-button {
   background-color: #488eff;
-  width: 100px;
+  width: fit-content;
   padding: 15px;
   cursor: pointer;
   border: none;

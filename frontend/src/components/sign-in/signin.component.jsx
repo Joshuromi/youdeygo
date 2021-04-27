@@ -34,6 +34,7 @@ class SignIn extends React.Component {
         const { history } = this.props;
         const user = jwt(token);
         user.token = token;
+        console.log(user);
         this.props.setUser(user);
         swal({
           title: "Sign In Successful",

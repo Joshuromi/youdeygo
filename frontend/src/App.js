@@ -7,7 +7,6 @@ import Header from "./components/header/header.component";
 import LandingPage from "./pages/landing/landingPage";
 import SignupAndSignin from "./pages/signup-and-signin/signupAndSignin";
 import Dashboard from "./pages/dashboard/dashboard";
-// import api from "./services/api";
 
 import "./App.css";
 

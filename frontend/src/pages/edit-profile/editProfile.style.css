@@ -12,16 +12,6 @@
   margin-right: 5px;
 }
 
-.profile-pics {
-  width: 80%;
-  margin: auto;
-}
-
-.profile-pics img {
-  width: 100%;
-  border-radius: 50%;
-}
-
 .edit-form {
   background-color: #fff;
   padding: 20px;
@@ -43,7 +33,7 @@
   opacity: 0.8;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .edit-profile {
     flex-direction: column;
   }
@@ -58,5 +48,3 @@
   }
 }
 
-@media (max-width: 800px) {
-}

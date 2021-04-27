@@ -6,8 +6,8 @@ import api from "../../services/api";
 import { setUser } from "../../redux/user/user.action";
 import FormInput from "../../components/form-input/formInput.component";
 import CustomButton from "../../components/buttons/customButton.component";
+import ProfilePicture from "../../components/profile-picture/profilePicture.component";
 
-import PP from "../../assests/pp.png";
 import "./editProfile.style.css";
 
 class EditProfile extends React.Component {
@@ -101,9 +101,7 @@ class EditProfile extends React.Component {
     return (
       <div className="edit-profile">
         <div className="user-info">
-          <div className="profile-pics">
-            <img src={PP} alt="profile pics" />
-          </div>
+          <ProfilePicture />
           <div className="user-details">
             <p>Name: {`${currentUser.firstName} ${currentUser.lastName}`}</p>
             <p>Email: {currentUser.email}</p>
